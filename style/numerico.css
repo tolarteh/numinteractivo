@@ -4,8 +4,7 @@
 h1.num {
     background-color: #004986;
     color: #FFFFFF;
-    font-size: 150%;
-    font-weight: bold;
+    font-size: 200%;
     text-align: center;
     padding: 8px;
     line-height: 1;
@@ -13,13 +12,14 @@ h1.num {
 
 h2.num {
     color: #993300;
-    font-size: 100%;
-    font-weight: bold;
+    font-size: 135%;
     line-height: 1;
+    margin-top: 20px;
 }
 
 hr.num {
     border-top: 1px solid #07428A;
+    margin: 10px 0;
 }
 
 /* Tabla con borde y centrada */
@@ -186,12 +186,10 @@ form.pregunta {
 }
 
 .pregunta button[type=submit] {
-    background-color: #4CAF50;
     border-radius: 6px;
-    color: #FFFFFF;
     font-size: 100%;
     height: 32px;
-    margin-right: 10px;
+    margin: 0 10px 0 0;
 }
 
 .icono {
