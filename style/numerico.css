@@ -186,6 +186,7 @@ form.pregunta {
 }
 
 .pregunta button[type=submit] {
+    /*background-color: #4CAF50;*/
     border-radius: 6px;
     font-size: 100%;
     height: 32px;
@@ -209,12 +210,13 @@ form.pregunta {
 
 /* SECTION: Sugerencias */
 button.sugerencia {
-    background-color: #C95203;
+    /*background-color: #C95203;*/
+    background-color: #f5ccb1;
+    background-image: linear-gradient(to bottom, #fff, #f5ccb1);
     border-radius: 6px;
-    color: #FFFFFF;
     font-size: 100%;
     height: 32px;
-    margin-right: 10px;
+    margin: 0 10px 0 0;
 }
 
 section.sugerencia {
