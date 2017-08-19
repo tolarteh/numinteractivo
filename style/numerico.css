@@ -187,8 +187,6 @@ form.pregunta {
 
 .pregunta button[type=submit] {
     /*background-color: #4CAF50;*/
-    background-color: #b3dca1;
-    background-image: linear-gradient(to bottom, #fff, #b3dca1);
     border-radius: 6px;
     font-size: 100%;
     height: 32px;
