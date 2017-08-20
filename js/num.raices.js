@@ -1,6 +1,12 @@
 /**
  * Design by Al-Khwarizmi
  */
+requirejs.config({
+	shim: {
+		"jquery.tmpl": ["jquery"]
+	}
+});
+
 require(["math", "jquery", "jquery.tmpl", "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"], function(math, $) {
 	// functionPlot
 	require(["d3"], function() {

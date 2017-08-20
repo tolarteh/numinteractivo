@@ -1,9 +1,2019 @@
-/**
+/** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.1.5 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/requirejs for details
  */
-var requirejs,require,define;!function(global){function isFunction(a){return"[object Function]"===ostring.call(a)}function isArray(a){return"[object Array]"===ostring.call(a)}function each(a,b){if(a){var c;for(c=0;c<a.length&&(!a[c]||!b(a[c],c,a));c+=1);}}function eachReverse(a,b){if(a){var c;for(c=a.length-1;c>-1&&(!a[c]||!b(a[c],c,a));c-=1);}}function hasProp(a,b){return hasOwn.call(a,b)}function getOwn(a,b){return hasProp(a,b)&&a[b]}function eachProp(a,b){var c;for(c in a)if(hasProp(a,c)&&b(a[c],c))break}function mixin(a,b,c,d){return b&&eachProp(b,function(b,e){!c&&hasProp(a,e)||(d&&"string"!=typeof b?(a[e]||(a[e]={}),mixin(a[e],b,c,d)):a[e]=b)}),a}function bind(a,b){return function(){return b.apply(a,arguments)}}function scripts(){return document.getElementsByTagName("script")}function getGlobal(a){if(!a)return a;var b=global;return each(a.split("."),function(a){b=b[a]}),b}function makeError(a,b,c,d){var e=new Error(b+"\nhttp://requirejs.org/docs/errors.html#"+a);return e.requireType=a,e.requireModules=d,c&&(e.originalError=c),e}function newContext(a){function p(a){var b,c;for(b=0;a[b];b+=1)if(c=a[b],"."===c)a.splice(b,1),b-=1;else if(".."===c){if(1===b&&(".."===a[2]||".."===a[0]))break;b>0&&(a.splice(b-1,2),b-=2)}}function q(a,b,c){var d,e,f,h,i,j,k,l,m,n,o,q=b&&b.split("/"),r=q,s=g.map,t=s&&s["*"];if(a&&"."===a.charAt(0)&&(b?(r=getOwn(g.pkgs,b)?q=[b]:q.slice(0,q.length-1),a=r.concat(a.split("/")),p(a),e=getOwn(g.pkgs,d=a[0]),a=a.join("/"),e&&a===d+"/"+e.main&&(a=d)):0===a.indexOf("./")&&(a=a.substring(2))),c&&s&&(q||t)){for(h=a.split("/"),i=h.length;i>0;i-=1){if(k=h.slice(0,i).join("/"),q)for(j=q.length;j>0;j-=1)if(f=getOwn(s,q.slice(0,j).join("/")),f&&(f=getOwn(f,k))){l=f,m=i;break}if(l)break;!n&&t&&getOwn(t,k)&&(n=getOwn(t,k),o=i)}!l&&n&&(l=n,m=o),l&&(h.splice(0,m,l),a=h.join("/"))}return a}function r(a){isBrowser&&each(scripts(),function(b){if(b.getAttribute("data-requiremodule")===a&&b.getAttribute("data-requirecontext")===d.contextName)return b.parentNode.removeChild(b),!0})}function s(a){var b=getOwn(g.paths,a);if(b&&isArray(b)&&b.length>1)return r(a),b.shift(),d.require.undef(a),d.require([a]),!0}function t(a){var b,c=a?a.indexOf("!"):-1;return c>-1&&(b=a.substring(0,c),a=a.substring(c+1,a.length)),[b,a]}function u(a,b,c,e){var f,g,h,i,j=null,k=b?b.name:null,m=a,p=!0,r="";return a||(p=!1,a="_@r"+(n+=1)),i=t(a),j=i[0],a=i[1],j&&(j=q(j,k,e),g=getOwn(l,j)),a&&(j?r=g&&g.normalize?g.normalize(a,function(a){return q(a,k,e)}):q(a,k,e):(r=q(a,k,e),i=t(r),j=i[0],r=i[1],c=!0,f=d.nameToUrl(r))),h=!j||g||c?"":"_unnormalized"+(o+=1),{prefix:j,name:r,parentMap:b,unnormalized:!!h,url:f,originalName:m,isDefine:p,id:(j?j+"!"+r:r)+h}}function v(a){var b=a.id,c=getOwn(h,b);return c||(c=h[b]=new d.Module(a)),c}function w(a,b,c){var d=a.id,e=getOwn(h,d);!hasProp(l,d)||e&&!e.defineEmitComplete?v(a).on(b,c):"defined"===b&&c(l[d])}function x(a,b){var c=a.requireModules,d=!1;b?b(a):(each(c,function(b){var c=getOwn(h,b);c&&(c.error=a,c.events.error&&(d=!0,c.emit("error",a)))}),d||req.onError(a))}function y(){globalDefQueue.length&&(apsp.apply(k,[k.length-1,0].concat(globalDefQueue)),globalDefQueue=[])}function z(a){delete h[a],delete i[a]}function A(a,b,c){var d=a.map.id;a.error?a.emit("error",a.error):(b[d]=!0,each(a.depMaps,function(d,e){var f=d.id,g=getOwn(h,f);!g||a.depMatched[e]||c[f]||(getOwn(b,f)?(a.defineDep(e,l[f]),a.check()):A(g,b,c))}),c[d]=!0)}function B(){var a,c,e,h,j=1e3*g.waitSeconds,k=j&&d.startTime+j<(new Date).getTime(),l=[],m=[],n=!1,o=!0;if(!b){if(b=!0,eachProp(i,function(b){if(a=b.map,c=a.id,b.enabled&&(a.isDefine||m.push(b),!b.error))if(!b.inited&&k)s(c)?(h=!0,n=!0):(l.push(c),r(c));else if(!b.inited&&b.fetched&&a.isDefine&&(n=!0,!a.prefix))return o=!1}),k&&l.length)return e=makeError("timeout","Load timeout for modules: "+l,null,l),e.contextName=d.contextName,x(e);o&&each(m,function(a){A(a,{},{})}),k&&!h||!n||!isBrowser&&!isWebWorker||f||(f=setTimeout(function(){f=0,B()},50)),b=!1}}function C(a){hasProp(l,a[0])||v(u(a[0],null,!0)).init(a[1],a[2])}function D(a,b,c,d){a.detachEvent&&!isOpera?d&&a.detachEvent(d,b):a.removeEventListener(c,b,!1)}function E(a){var b=a.currentTarget||a.srcElement;return D(b,d.onScriptLoad,"load","onreadystatechange"),D(b,d.onScriptError,"error"),{node:b,id:b&&b.getAttribute("data-requiremodule")}}function F(){var a;for(y();k.length;){if(a=k.shift(),null===a[0])return x(makeError("mismatch","Mismatched anonymous define() module: "+a[a.length-1]));C(a)}}var b,c,d,e,f,g={waitSeconds:7,baseUrl:"./",paths:{},pkgs:{},shim:{},config:{}},h={},i={},j={},k=[],l={},m={},n=1,o=1;return e={require:function(a){return a.require?a.require:a.require=d.makeRequire(a.map)},exports:function(a){if(a.usingExports=!0,a.map.isDefine)return a.exports?a.exports:a.exports=l[a.map.id]={}},module:function(a){return a.module?a.module:a.module={id:a.map.id,uri:a.map.url,config:function(){return g.config&&getOwn(g.config,a.map.id)||{}},exports:l[a.map.id]}}},c=function(a){this.events=getOwn(j,a.id)||{},this.map=a,this.shim=getOwn(g.shim,a.id),this.depExports=[],this.depMaps=[],this.depMatched=[],this.pluginMaps={},this.depCount=0},c.prototype={init:function(a,b,c,d){d=d||{},this.inited||(this.factory=b,c?this.on("error",c):this.events.error&&(c=bind(this,function(a){this.emit("error",a)})),this.depMaps=a&&a.slice(0),this.errback=c,this.inited=!0,this.ignore=d.ignore,d.enabled||this.enabled?this.enable():this.check())},defineDep:function(a,b){this.depMatched[a]||(this.depMatched[a]=!0,this.depCount-=1,this.depExports[a]=b)},fetch:function(){if(!this.fetched){this.fetched=!0,d.startTime=(new Date).getTime();var a=this.map;return this.shim?void d.makeRequire(this.map,{enableBuildCallback:!0})(this.shim.deps||[],bind(this,function(){return a.prefix?this.callPlugin():this.load()})):a.prefix?this.callPlugin():this.load()}},load:function(){var a=this.map.url;m[a]||(m[a]=!0,d.load(this.map.id,a))},check:function(){if(this.enabled&&!this.enabling){var a,b,c=this.map.id,e=this.depExports,f=this.exports,g=this.factory;if(this.inited){if(this.error)this.emit("error",this.error);else if(!this.defining){if(this.defining=!0,this.depCount<1&&!this.defined){if(isFunction(g)){if(this.events.error)try{f=d.execCb(c,g,e,f)}catch(b){a=b}else f=d.execCb(c,g,e,f);if(this.map.isDefine&&(b=this.module,b&&void 0!==b.exports&&b.exports!==this.exports?f=b.exports:void 0===f&&this.usingExports&&(f=this.exports)),a)return a.requireMap=this.map,a.requireModules=[this.map.id],a.requireType="define",x(this.error=a)}else f=g;this.exports=f,this.map.isDefine&&!this.ignore&&(l[c]=f,req.onResourceLoad&&req.onResourceLoad(d,this.map,this.depMaps)),z(c),this.defined=!0}this.defining=!1,this.defined&&!this.defineEmitted&&(this.defineEmitted=!0,this.emit("defined",this.exports),this.defineEmitComplete=!0)}}else this.fetch()}},callPlugin:function(){var a=this.map,b=a.id,c=u(a.prefix);this.depMaps.push(c),w(c,"defined",bind(this,function(c){var e,f,i,j=this.map.name,k=this.map.parentMap?this.map.parentMap.name:null,l=d.makeRequire(a.parentMap,{enableBuildCallback:!0});return this.map.unnormalized?(c.normalize&&(j=c.normalize(j,function(a){return q(a,k,!0)})||""),f=u(a.prefix+"!"+j,this.map.parentMap),w(f,"defined",bind(this,function(a){this.init([],function(){return a},null,{enabled:!0,ignore:!0})})),i=getOwn(h,f.id),void(i&&(this.depMaps.push(f),this.events.error&&i.on("error",bind(this,function(a){this.emit("error",a)})),i.enable()))):(e=bind(this,function(a){this.init([],function(){return a},null,{enabled:!0})}),e.error=bind(this,function(a){this.inited=!0,this.error=a,a.requireModules=[b],eachProp(h,function(a){0===a.map.id.indexOf(b+"_unnormalized")&&z(a.map.id)}),x(a)}),e.fromText=bind(this,function(c,f){var h=a.name,i=u(h),j=useInteractive;f&&(c=f),j&&(useInteractive=!1),v(i),hasProp(g.config,b)&&(g.config[h]=g.config[b]);try{req.exec(c)}catch(a){return x(makeError("fromtexteval","fromText eval for "+b+" failed: "+a,a,[b]))}j&&(useInteractive=!0),this.depMaps.push(i),d.completeLoad(h),l([h],e)}),void c.load(a.name,l,e,g))})),d.enable(c,this),this.pluginMaps[c.id]=c},enable:function(){i[this.map.id]=this,this.enabled=!0,this.enabling=!0,each(this.depMaps,bind(this,function(a,b){var c,f,g;if("string"==typeof a){if(a=u(a,this.map.isDefine?this.map:this.map.parentMap,!1,!this.skipMap),this.depMaps[b]=a,g=getOwn(e,a.id))return void(this.depExports[b]=g(this));this.depCount+=1,w(a,"defined",bind(this,function(a){this.defineDep(b,a),this.check()})),this.errback&&w(a,"error",this.errback)}c=a.id,f=h[c],hasProp(e,c)||!f||f.enabled||d.enable(a,this)})),eachProp(this.pluginMaps,bind(this,function(a){var b=getOwn(h,a.id);b&&!b.enabled&&d.enable(a,this)})),this.enabling=!1,this.check()},on:function(a,b){var c=this.events[a];c||(c=this.events[a]=[]),c.push(b)},emit:function(a,b){each(this.events[a],function(a){a(b)}),"error"===a&&delete this.events[a]}},d={config:g,contextName:a,registry:h,defined:l,urlFetched:m,defQueue:k,Module:c,makeModuleMap:u,nextTick:req.nextTick,onError:x,configure:function(a){a.baseUrl&&"/"!==a.baseUrl.charAt(a.baseUrl.length-1)&&(a.baseUrl+="/");var b=g.pkgs,c=g.shim,e={paths:!0,config:!0,map:!0};eachProp(a,function(a,b){e[b]?"map"===b?(g.map||(g.map={}),mixin(g[b],a,!0,!0)):mixin(g[b],a,!0):g[b]=a}),a.shim&&(eachProp(a.shim,function(a,b){isArray(a)&&(a={deps:a}),!a.exports&&!a.init||a.exportsFn||(a.exportsFn=d.makeShimExports(a)),c[b]=a}),g.shim=c),a.packages&&(each(a.packages,function(a){var c;a="string"==typeof a?{name:a}:a,c=a.location,b[a.name]={name:a.name,location:c||a.name,main:(a.main||"main").replace(currDirRegExp,"").replace(jsSuffixRegExp,"")}}),g.pkgs=b),eachProp(h,function(a,b){a.inited||a.map.unnormalized||(a.map=u(b))}),(a.deps||a.callback)&&d.require(a.deps||[],a.callback)},makeShimExports:function(a){function b(){var b;return a.init&&(b=a.init.apply(global,arguments)),b||a.exports&&getGlobal(a.exports)}return b},makeRequire:function(b,c){function f(g,i,j){var k,m,n;return c.enableBuildCallback&&i&&isFunction(i)&&(i.__requireJsBuild=!0),"string"==typeof g?isFunction(i)?x(makeError("requireargs","Invalid require call"),j):b&&hasProp(e,g)?e[g](h[b.id]):req.get?req.get(d,g,b,f):(m=u(g,b,!1,!0),k=m.id,hasProp(l,k)?l[k]:x(makeError("notloaded",'Module name "'+k+'" has not been loaded yet for context: '+a+(b?"":". Use require([])")))):(F(),d.nextTick(function(){F(),n=v(u(null,b)),n.skipMap=c.skipMap,n.init(g,i,j,{enabled:!0}),B()}),f)}return c=c||{},mixin(f,{isBrowser:isBrowser,toUrl:function(a){var c,e=a.lastIndexOf("."),f=a.split("/")[0],g="."===f||".."===f;return e!==-1&&(!g||e>1)&&(c=a.substring(e,a.length),a=a.substring(0,e)),d.nameToUrl(q(a,b&&b.id,!0),c,!0)},defined:function(a){return hasProp(l,u(a,b,!1,!0).id)},specified:function(a){return a=u(a,b,!1,!0).id,hasProp(l,a)||hasProp(h,a)}}),b||(f.undef=function(a){y();var c=u(a,b,!0),d=getOwn(h,a);delete l[a],delete m[c.url],delete j[a],d&&(d.events.defined&&(j[a]=d.events),z(a))}),f},enable:function(a){var b=getOwn(h,a.id);b&&v(a).enable()},completeLoad:function(a){var b,c,d,e=getOwn(g.shim,a)||{},f=e.exports;for(y();k.length;){if(c=k.shift(),null===c[0]){if(c[0]=a,b)break;b=!0}else c[0]===a&&(b=!0);C(c)}if(d=getOwn(h,a),!b&&!hasProp(l,a)&&d&&!d.inited){if(!(!g.enforceDefine||f&&getGlobal(f)))return s(a)?void 0:x(makeError("nodefine","No define call for "+a,null,[a]));C([a,e.deps||[],e.exportsFn])}B()},nameToUrl:function(a,b,c){var d,e,f,h,i,j,k,l,m;if(req.jsExtRegExp.test(a))l=a+(b||"");else{for(d=g.paths,e=g.pkgs,i=a.split("/"),j=i.length;j>0;j-=1){if(k=i.slice(0,j).join("/"),f=getOwn(e,k),m=getOwn(d,k)){isArray(m)&&(m=m[0]),i.splice(0,j,m);break}if(f){h=a===f.name?f.location+"/"+f.main:f.location,i.splice(0,j,h);break}}l=i.join("/"),l+=b||(/\?/.test(l)||c?"":".js"),l=("/"===l.charAt(0)||l.match(/^[\w\+\.\-]+:/)?"":g.baseUrl)+l}return g.urlArgs?l+((l.indexOf("?")===-1?"?":"&")+g.urlArgs):l},load:function(a,b){req.load(d,a,b)},execCb:function(a,b,c,d){return b.apply(d,c)},onScriptLoad:function(a){if("load"===a.type||readyRegExp.test((a.currentTarget||a.srcElement).readyState)){interactiveScript=null;var b=E(a);d.completeLoad(b.id)}},onScriptError:function(a){var b=E(a);if(!s(b.id))return x(makeError("scripterror","Script error",a,[b.id]))}},d.require=d.makeRequire(),d}function getInteractiveScript(){return interactiveScript&&"interactive"===interactiveScript.readyState?interactiveScript:(eachReverse(scripts(),function(a){if("interactive"===a.readyState)return interactiveScript=a}),interactiveScript)}var req,s,head,baseElement,dataMain,src,interactiveScript,currentlyAddingScript,mainScript,subPath,version="2.1.5",commentRegExp=/(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/gm,cjsRequireRegExp=/[^.]\s*require\s*\(\s*["']([^'"\s]+)["']\s*\)/g,jsSuffixRegExp=/\.js$/,currDirRegExp=/^\.\//,op=Object.prototype,ostring=op.toString,hasOwn=op.hasOwnProperty,ap=Array.prototype,apsp=ap.splice,isBrowser=!("undefined"==typeof window||!navigator||!document),isWebWorker=!isBrowser&&"undefined"!=typeof importScripts,readyRegExp=isBrowser&&"PLAYSTATION 3"===navigator.platform?/^complete$/:/^(complete|loaded)$/,defContextName="_",isOpera="undefined"!=typeof opera&&"[object Opera]"===opera.toString(),contexts={},cfg={},globalDefQueue=[],useInteractive=!1;if("undefined"==typeof define){if("undefined"!=typeof requirejs){if(isFunction(requirejs))return;cfg=requirejs,requirejs=void 0}"undefined"==typeof require||isFunction(require)||(cfg=require,require=void 0),req=requirejs=function(a,b,c,d){var e,f,g=defContextName;return isArray(a)||"string"==typeof a||(f=a,isArray(b)?(a=b,b=c,c=d):a=[]),f&&f.context&&(g=f.context),e=getOwn(contexts,g),e||(e=contexts[g]=req.s.newContext(g)),f&&e.configure(f),e.require(a,b,c)},req.config=function(a){return req(a)},req.nextTick="undefined"!=typeof setTimeout?function(a){setTimeout(a,4)}:function(a){a()},require||(require=req),req.version=version,req.jsExtRegExp=/^\/|:|\?|\.js$/,req.isBrowser=isBrowser,s=req.s={contexts:contexts,newContext:newContext},req({}),each(["toUrl","undef","defined","specified"],function(a){req[a]=function(){var b=contexts[defContextName];return b.require[a].apply(b,arguments)}}),isBrowser&&(head=s.head=document.getElementsByTagName("head")[0],baseElement=document.getElementsByTagName("base")[0],baseElement&&(head=s.head=baseElement.parentNode)),req.onError=function(a){throw a},req.load=function(a,b,c){var e,d=a&&a.config||{};if(isBrowser)return e=d.xhtml?document.createElementNS("http://www.w3.org/1999/xhtml","html:script"):document.createElement("script"),e.type=d.scriptType||"text/javascript",e.charset="utf-8",e.async=!0,e.setAttribute("data-requirecontext",a.contextName),e.setAttribute("data-requiremodule",b),!e.attachEvent||e.attachEvent.toString&&e.attachEvent.toString().indexOf("[native code")<0||isOpera?(e.addEventListener("load",a.onScriptLoad,!1),e.addEventListener("error",a.onScriptError,!1)):(useInteractive=!0,e.attachEvent("onreadystatechange",a.onScriptLoad)),e.src=c,currentlyAddingScript=e,baseElement?head.insertBefore(e,baseElement):head.appendChild(e),currentlyAddingScript=null,e;if(isWebWorker)try{importScripts(c),a.completeLoad(b)}catch(d){a.onError(makeError("importscripts","importScripts failed for "+b+" at "+c,d,[b]))}},isBrowser&&eachReverse(scripts(),function(a){if(head||(head=a.parentNode),dataMain=a.getAttribute("data-main"))return cfg.baseUrl||(src=dataMain.split("/"),mainScript=src.pop(),subPath=src.length?src.join("/")+"/":"./",cfg.baseUrl=subPath,dataMain=mainScript),dataMain=dataMain.replace(jsSuffixRegExp,""),cfg.deps=cfg.deps?cfg.deps.concat(dataMain):[dataMain],!0}),define=function(a,b,c){var d,e;"string"!=typeof a&&(c=b,b=a,a=null),isArray(b)||(c=b,b=[]),!b.length&&isFunction(c)&&c.length&&(c.toString().replace(commentRegExp,"").replace(cjsRequireRegExp,function(a,c){b.push(c)}),b=(1===c.length?["require"]:["require","exports","module"]).concat(b)),useInteractive&&(d=currentlyAddingScript||getInteractiveScript(),d&&(a||(a=d.getAttribute("data-requiremodule")),e=contexts[d.getAttribute("data-requirecontext")])),(e?e.defQueue:globalDefQueue).push([a,b,c])},define.amd={jQuery:!0},req.exec=function(text){return eval(text)},req(cfg)}}(this),function(a,b){function D(a){var b=a.length,c=u.type(a);return!u.isWindow(a)&&(!(1!==a.nodeType||!b)||("array"===c||"function"!==c&&(0===b||"number"==typeof b&&b>0&&b-1 in a)))}function F(a){var b=E[a]={};return u.each(a.match(w)||[],function(a,c){b[c]=!0}),b}function K(){Object.defineProperty(this.cache={},0,{get:function(){return{}}}),this.expando=u.expando+Math.random()}function L(a,c,d){var e;if(d===b&&1===a.nodeType)if(e="data-"+c.replace(J,"-$1").toLowerCase(),d=a.getAttribute(e),"string"==typeof d){try{d="true"===d||"false"!==d&&("null"===d?null:+d+""===d?+d:I.test(d)?JSON.parse(d):d)}catch(a){}G.set(a,c,d)}else d=b;return d}function V(){return!0}function W(){return!1}function X(){try{return g.activeElement}catch(a){}}function _(a,b){for(;(a=a[b])&&1!==a.nodeType;);return a}function aa(a,b,c){if(u.isFunction(b))return u.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return u.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(Y.test(b))return u.filter(b,a,c);b=u.filter(b,a)}return u.grep(a,function(a){return q.call(b,a)>=0!==c})}function la(a,b){return u.nodeName(a,"table")&&u.nodeName(1===b.nodeType?b:b.firstChild,"tr")?a.getElementsByTagName("tbody")[0]||a.appendChild(a.ownerDocument.createElement("tbody")):a}function ma(a){return a.type=(null!==a.getAttribute("type"))+"/"+a.type,a}function na(a){var b=ia.exec(a.type);return b?a.type=b[1]:a.removeAttribute("type"),a}function oa(a,b){for(var c=a.length,d=0;d<c;d++)H.set(a[d],"globalEval",!b||H.get(b[d],"globalEval"))}function pa(a,b){var c,d,e,f,g,h,i,j;if(1===b.nodeType){if(H.hasData(a)&&(f=H.access(a),g=u.extend({},f),j=f.events,H.set(b,g),j)){delete g.handle,g.events={};for(e in j)for(c=0,d=j[e].length;c<d;c++)u.event.add(b,e,j[e][c])}G.hasData(a)&&(h=G.access(a),i=u.extend({},h),G.set(b,i))}}function qa(a,c){var d=a.getElementsByTagName?a.getElementsByTagName(c||"*"):a.querySelectorAll?a.querySelectorAll(c||"*"):[];return c===b||c&&u.nodeName(a,c)?u.merge([a],d):d}function ra(a,b){var c=b.nodeName.toLowerCase();"input"===c&&fa.test(a.type)?b.checked=a.checked:"input"!==c&&"textarea"!==c||(b.defaultValue=a.defaultValue)}function Ea(a,b){if(b in a)return b;for(var c=b.charAt(0).toUpperCase()+b.slice(1),d=b,e=Da.length;e--;)if(b=Da[e]+c,b in a)return b;return d}function Fa(a,b){return a=b||a,"none"===u.css(a,"display")||!u.contains(a.ownerDocument,a)}function Ga(b){return a.getComputedStyle(b,null)}function Ha(a,b){for(var c,d,e,f=[],g=0,h=a.length;g<h;g++)d=a[g],d.style&&(f[g]=H.get(d,"olddisplay"),c=d.style.display,b?(f[g]||"none"!==c||(d.style.display=""),""===d.style.display&&Fa(d)&&(f[g]=H.access(d,"olddisplay",La(d.nodeName)))):f[g]||(e=Fa(d),(c&&"none"!==c||!e)&&H.set(d,"olddisplay",e?c:u.css(d,"display"))));for(g=0;g<h;g++)d=a[g],d.style&&(b&&"none"!==d.style.display&&""!==d.style.display||(d.style.display=b?f[g]||"":"none"));return a}function Ia(a,b,c){var d=wa.exec(b);return d?Math.max(0,d[1]-(c||0))+(d[2]||"px"):b}function Ja(a,b,c,d,e){for(var f=c===(d?"border":"content")?4:"width"===b?1:0,g=0;f<4;f+=2)"margin"===c&&(g+=u.css(a,c+Ca[f],!0,e)),d?("content"===c&&(g-=u.css(a,"padding"+Ca[f],!0,e)),"margin"!==c&&(g-=u.css(a,"border"+Ca[f]+"Width",!0,e))):(g+=u.css(a,"padding"+Ca[f],!0,e),"padding"!==c&&(g+=u.css(a,"border"+Ca[f]+"Width",!0,e)));return g}function Ka(a,b,c){var d=!0,e="width"===b?a.offsetWidth:a.offsetHeight,f=Ga(a),g=u.support.boxSizing&&"border-box"===u.css(a,"boxSizing",!1,f);if(e<=0||null==e){if(e=sa(a,b,f),(e<0||null==e)&&(e=a.style[b]),xa.test(e))return e;d=g&&(u.support.boxSizingReliable||e===a.style[b]),e=parseFloat(e)||0}return e+Ja(a,b,c||(g?"border":"content"),d,f)+"px"}function La(a){var b=g,c=za[a];return c||(c=Ma(a,b),"none"!==c&&c||(ta=(ta||u("<iframe frameborder='0' width='0' height='0'/>").css("cssText","display:block !important")).appendTo(b.documentElement),b=(ta[0].contentWindow||ta[0].contentDocument).document,b.write("<!doctype html><html><body>"),b.close(),c=Ma(a,b),ta.detach()),za[a]=c),c}function Ma(a,b){var c=u(b.createElement(a)).appendTo(b.body),d=u.css(c[0],"display");return c.remove(),d}function Sa(a,b,c,d){var e;if(u.isArray(b))u.each(b,function(b,e){c||Oa.test(a)?d(a,e):Sa(a+"["+("object"==typeof e?b:"")+"]",e,c,d)});else if(c||"object"!==u.type(b))d(a,b);else for(e in b)Sa(a+"["+e+"]",b[e],c,d)}function gb(a){return function(b,c){"string"!=typeof b&&(c=b,b="*");var d,e=0,f=b.toLowerCase().match(w)||[];if(u.isFunction(c))for(;d=f[e++];)"+"===d[0]?(d=d.slice(1)||"*",(a[d]=a[d]||[]).unshift(c)):(a[d]=a[d]||[]).push(c)}}function hb(a,b,c,d){function g(h){var i;return e[h]=!0,u.each(a[h]||[],function(a,h){var j=h(b,c,d);return"string"!=typeof j||f||e[j]?f?!(i=j):void 0:(b.dataTypes.unshift(j),g(j),!1)}),i}var e={},f=a===eb;return g(b.dataTypes[0])||!e["*"]&&g("*")}function ib(a,c){var d,e,f=u.ajaxSettings.flatOptions||{};for(d in c)c[d]!==b&&((f[d]?a:e||(e={}))[d]=c[d]);return e&&u.extend(!0,a,e),a}function jb(a,c,d){for(var e,f,g,h,i=a.contents,j=a.dataTypes;"*"===j[0];)j.shift(),e===b&&(e=a.mimeType||c.getResponseHeader("Content-Type"));if(e)for(f in i)if(i[f]&&i[f].test(e)){j.unshift(f);break}if(j[0]in d)g=j[0];else{for(f in d){if(!j[0]||a.converters[f+" "+j[0]]){g=f;break}h||(h=f)}g=g||h}if(g)return g!==j[0]&&j.unshift(g),d[g]}function kb(a,b,c,d){var e,f,g,h,i,j={},k=a.dataTypes.slice();if(k[1])for(g in a.converters)j[g.toLowerCase()]=a.converters[g];for(f=k.shift();f;)if(a.responseFields[f]&&(c[a.responseFields[f]]=b),!i&&d&&a.dataFilter&&(b=a.dataFilter(b,a.dataType)),i=f,f=k.shift())if("*"===f)f=i;else if("*"!==i&&i!==f){if(g=j[i+" "+f]||j["* "+f],!g)for(e in j)if(h=e.split(" "),h[1]===f&&(g=j[i+" "+h[0]]||j["* "+h[0]])){g===!0?g=j[e]:j[e]!==!0&&(f=h[0],k.unshift(h[1]));break}if(g!==!0)if(g&&a.throws)b=g(b);else try{b=g(b)}catch(a){return{state:"parsererror",error:g?a:"No conversion from "+i+" to "+f}}}return{state:"success",data:b}}function yb(){return setTimeout(function(){rb=b}),rb=u.now()}function zb(a,b){u.each(b,function(b,c){for(var d=(xb[b]||[]).concat(xb["*"]),e=0,f=d.length;e<f;e++)if(d[e].call(a,b,c))return})}function Ab(a,b,c){var d,e,f=0,g=wb.length,h=u.Deferred().always(function(){delete i.elem}),i=function(){if(e)return!1;for(var b=rb||yb(),c=Math.max(0,j.startTime+j.duration-b),d=c/j.duration||0,f=1-d,g=0,i=j.tweens.length;g<i;g++)j.tweens[g].run(f);return h.notifyWith(a,[j,f,c]),f<1&&i?c:(h.resolveWith(a,[j]),!1)},j=h.promise({elem:a,props:u.extend({},b),opts:u.extend(!0,{specialEasing:{}},c),originalProperties:b,originalOptions:c,startTime:rb||yb(),duration:c.duration,tweens:[],createTween:function(b,c){var d=u.Tween(a,j.opts,b,c,j.opts.specialEasing[b]||j.opts.easing);return j.tweens.push(d),d},stop:function(b){var c=0,d=b?j.tweens.length:0;if(e)return this;for(e=!0;c<d;c++)j.tweens[c].run(1);return b?h.resolveWith(a,[j,b]):h.rejectWith(a,[j,b]),this}}),k=j.props;for(Bb(k,j.opts.specialEasing);f<g;f++)if(d=wb[f].call(j,a,k,j.opts))return d;return zb(j,k),u.isFunction(j.opts.start)&&j.opts.start.call(a,j),u.fx.timer(u.extend(i,{elem:a,anim:j,queue:j.opts.queue})),j.progress(j.opts.progress).done(j.opts.done,j.opts.complete).fail(j.opts.fail).always(j.opts.always)}function Bb(a,b){var c,d,e,f,g;for(c in a)if(d=u.camelCase(c),e=b[d],f=a[c],u.isArray(f)&&(e=f[1],f=a[c]=f[0]),c!==d&&(a[d]=f,delete a[c]),g=u.cssHooks[d],g&&"expand"in g){f=g.expand(f),delete a[d];for(c in f)c in a||(a[c]=f[c],b[c]=e)}else b[d]=e}function Cb(a,c,d){var e,f,g,h,i,j,k,l,m,n=this,o=a.style,p={},q=[],r=a.nodeType&&Fa(a);d.queue||(l=u._queueHooks(a,"fx"),null==l.unqueued&&(l.unqueued=0,m=l.empty.fire,l.empty.fire=function(){l.unqueued||m()}),l.unqueued++,n.always(function(){n.always(function(){l.unqueued--,u.queue(a,"fx").length||l.empty.fire()})})),1===a.nodeType&&("height"in c||"width"in c)&&(d.overflow=[o.overflow,o.overflowX,o.overflowY],"inline"===u.css(a,"display")&&"none"===u.css(a,"float")&&(o.display="inline-block")),d.overflow&&(o.overflow="hidden",n.always(function(){o.overflow=d.overflow[0],o.overflowX=d.overflow[1],o.overflowY=d.overflow[2]})),i=H.get(a,"fxshow");for(e in c)if(g=c[e],tb.exec(g)){if(delete c[e],j=j||"toggle"===g,g===(r?"hide":"show")){if("show"!==g||i===b||i[e]===b)continue;r=!0}q.push(e)}if(h=q.length){i=H.get(a,"fxshow")||H.access(a,"fxshow",{}),"hidden"in i&&(r=i.hidden),j&&(i.hidden=!r),r?u(a).show():n.done(function(){u(a).hide()}),n.done(function(){var b;H.remove(a,"fxshow");for(b in p)u.style(a,b,p[b])});for(e=0;e<h;e++)f=q[e],k=n.createTween(f,r?i[f]:0),p[f]=i[f]||u.style(a,f),f in i||(i[f]=k.start,r&&(k.end=k.start,k.start="width"===f||"height"===f?1:0))}}function Db(a,b,c,d,e){return new Db.prototype.init(a,b,c,d,e)}function Eb(a,b){var c,d={height:a},e=0;for(b=b?1:0;e<4;e+=2-b)c=Ca[e],d["margin"+c]=d["padding"+c]=a;return b&&(d.opacity=d.width=a),d}function Fb(a){return u.isWindow(a)?a:9===a.nodeType&&a.defaultView}var c,d,e=typeof b,f=a.location,g=a.document,h=g.documentElement,i=a.jQuery,j=a.$,k={},l=[],m="2.0.0",n=l.concat,o=l.push,p=l.slice,q=l.indexOf,r=k.toString,s=k.hasOwnProperty,t=m.trim,u=function(a,b){return new u.fn.init(a,b,c)},v=/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,w=/\S+/g,x=/^(?:(<[\w\W]+>)[^>]*|#([\w-]*))$/,y=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,z=/^-ms-/,A=/-([\da-z])/gi,B=function(a,b){return b.toUpperCase()},C=function(){g.removeEventListener("DOMContentLoaded",C,!1),a.removeEventListener("load",C,!1),u.ready()};u.fn=u.prototype={jquery:m,constructor:u,init:function(a,c,d){var e,f;if(!a)return this;if("string"==typeof a){if(e="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:x.exec(a),!e||!e[1]&&c)return!c||c.jquery?(c||d).find(a):this.constructor(c).find(a);if(e[1]){if(c=c instanceof u?c[0]:c,u.merge(this,u.parseHTML(e[1],c&&c.nodeType?c.ownerDocument||c:g,!0)),y.test(e[1])&&u.isPlainObject(c))for(e in c)u.isFunction(this[e])?this[e](c[e]):this.attr(e,c[e]);return this}return f=g.getElementById(e[2]),f&&f.parentNode&&(this.length=1,this[0]=f),this.context=g,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):u.isFunction(a)?d.ready(a):(a.selector!==b&&(this.selector=a.selector,this.context=a.context),u.makeArray(a,this))},selector:"",length:0,toArray:function(){return p.call(this)},get:function(a){return null==a?this.toArray():a<0?this[this.length+a]:this[a]},pushStack:function(a){var b=u.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return u.each(this,a,b)},ready:function(a){return u.ready.promise().done(a),this},slice:function(){return this.pushStack(p.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(a<0?b:0);return this.pushStack(c>=0&&c<b?[this[c]]:[])},map:function(a){return this.pushStack(u.map(this,function(b,c){return a.call(b,c,b)}))},end:function(){return this.prevObject||this.constructor(null)},push:o,sort:[].sort,splice:[].splice},u.fn.init.prototype=u.fn,u.extend=u.fn.extend=function(){var a,c,d,e,f,g,h=arguments[0]||{},i=1,j=arguments.length,k=!1;for("boolean"==typeof h&&(k=h,h=arguments[1]||{},i=2),"object"==typeof h||u.isFunction(h)||(h={}),j===i&&(h=this,--i);i<j;i++)if(null!=(a=arguments[i]))for(c in a)d=h[c],e=a[c],h!==e&&(k&&e&&(u.isPlainObject(e)||(f=u.isArray(e)))?(f?(f=!1,g=d&&u.isArray(d)?d:[]):g=d&&u.isPlainObject(d)?d:{},h[c]=u.extend(k,g,e)):e!==b&&(h[c]=e));return h},u.extend({expando:"jQuery"+(m+Math.random()).replace(/\D/g,""),noConflict:function(b){return a.$===u&&(a.$=j),b&&a.jQuery===u&&(a.jQuery=i),u},isReady:!1,readyWait:1,holdReady:function(a){a?u.readyWait++:u.ready(!0)},ready:function(a){(a===!0?--u.readyWait:u.isReady)||(u.isReady=!0,a!==!0&&--u.readyWait>0||(d.resolveWith(g,[u]),u.fn.trigger&&u(g).trigger("ready").off("ready")))},isFunction:function(a){return"function"===u.type(a)},isArray:Array.isArray,isWindow:function(a){return null!=a&&a===a.window},isNumeric:function(a){return!isNaN(parseFloat(a))&&isFinite(a)},type:function(a){return null==a?String(a):"object"==typeof a||"function"==typeof a?k[r.call(a)]||"object":typeof a},isPlainObject:function(a){if("object"!==u.type(a)||a.nodeType||u.isWindow(a))return!1;try{if(a.constructor&&!s.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(a){return!1}return!0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},error:function(a){throw new Error(a)},parseHTML:function(a,b,c){if(!a||"string"!=typeof a)return null;"boolean"==typeof b&&(c=b,b=!1),b=b||g;var d=y.exec(a),e=!c&&[];return d?[b.createElement(d[1])]:(d=u.buildFragment([a],b,e),e&&u(e).remove(),u.merge([],d.childNodes))},parseJSON:JSON.parse,parseXML:function(a){var c,d;if(!a||"string"!=typeof a)return null;try{d=new DOMParser,c=d.parseFromString(a,"text/xml")}catch(a){c=b}return c&&!c.getElementsByTagName("parsererror").length||u.error("Invalid XML: "+a),c},noop:function(){},globalEval:function(a){var b,c=eval;a=u.trim(a),a&&(1===a.indexOf("use strict")?(b=g.createElement("script"),b.text=a,g.head.appendChild(b).parentNode.removeChild(b)):c(a))},camelCase:function(a){return a.replace(z,"ms-").replace(A,B)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=D(a);if(c){if(g)for(;e<f&&(d=b.apply(a[e],c),d!==!1);e++);else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g)for(;e<f&&(d=b.call(a[e],e,a[e]),d!==!1);e++);else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":t.call(a)},makeArray:function(a,b){var c=b||[];return null!=a&&(D(Object(a))?u.merge(c,"string"==typeof a?[a]:a):o.call(c,a)),c},inArray:function(a,b,c){return null==b?-1:q.call(b,a,c)},merge:function(a,c){var d=c.length,e=a.length,f=0;if("number"==typeof d)for(;f<d;f++)a[e++]=c[f];else for(;c[f]!==b;)a[e++]=c[f++];return a.length=e,a},grep:function(a,b,c){var d,e=[],f=0,g=a.length;for(c=!!c;f<g;f++)d=!!b(a[f],f),c!==d&&e.push(a[f]);return e},map:function(a,b,c){var d,e=0,f=a.length,g=D(a),h=[];if(g)for(;e<f;e++)d=b(a[e],e,c),null!=d&&(h[h.length]=d);else for(e in a)d=b(a[e],e,c),null!=d&&(h[h.length]=d);return n.apply([],h)},guid:1,proxy:function(a,c){var d,e,f;return"string"==typeof c&&(d=a[c],c=a,a=d),u.isFunction(a)?(e=p.call(arguments,2),f=function(){return a.apply(c||this,e.concat(p.call(arguments)))},f.guid=a.guid=a.guid||u.guid++,f):b},access:function(a,c,d,e,f,g,h){var i=0,j=a.length,k=null==d;if("object"===u.type(d)){f=!0;for(i in d)u.access(a,c,i,d[i],!0,g,h)}else if(e!==b&&(f=!0,u.isFunction(e)||(h=!0),k&&(h?(c.call(a,e),c=null):(k=c,c=function(a,b,c){return k.call(u(a),c)})),c))for(;i<j;i++)c(a[i],d,h?e:e.call(a[i],i,c(a[i],d)));return f?a:k?c.call(a):j?c(a[0],d):g},now:Date.now,swap:function(a,b,c,d){var e,f,g={};for(f in b)g[f]=a.style[f],a.style[f]=b[f];e=c.apply(a,d||[]);for(f in b)a.style[f]=g[f];return e}}),u.ready.promise=function(b){return d||(d=u.Deferred(),"complete"===g.readyState?setTimeout(u.ready):(g.addEventListener("DOMContentLoaded",C,!1),a.addEventListener("load",C,!1))),d.promise(b)},u.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){k["[object "+b+"]"]=b.toLowerCase()}),c=u(g),function(a,b){function ea(a){return Z.test(a+"")}function fa(){var a,b=[];return a=function(c,d){return b.push(c+=" ")>e.cacheLength&&delete a[b.shift()],a[c]=d}}function ga(a){return a[s]=!0,a}function ha(a){var b=l.createElement("div");try{return!!a(b)}catch(a){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function ia(a,b,c,d){var e,f,g,h,i,j,m,p,q,u;if((b?b.ownerDocument||b:t)!==l&&k(b),b=b||l,c=c||[],!a||"string"!=typeof a)return c;if(1!==(h=b.nodeType)&&9!==h)return[];if(n&&!d){if(e=$.exec(a))if(g=e[1]){if(9===h){if(f=b.getElementById(g),!f||!f.parentNode)return c;if(f.id===g)return c.push(f),c}else if(b.ownerDocument&&(f=b.ownerDocument.getElementById(g))&&r(b,f)&&f.id===g)return c.push(f),
-c}else{if(e[2])return I.apply(c,b.getElementsByTagName(a)),c;if((g=e[3])&&v.getElementsByClassName&&b.getElementsByClassName)return I.apply(c,b.getElementsByClassName(g)),c}if(v.qsa&&(!o||!o.test(a))){if(p=m=s,q=b,u=9===h&&a,1===h&&"object"!==b.nodeName.toLowerCase()){for(j=pa(a),(m=b.getAttribute("id"))?p=m.replace(ba,"\\$&"):b.setAttribute("id",p),p="[id='"+p+"'] ",i=j.length;i--;)j[i]=p+qa(j[i]);q=U.test(a)&&b.parentNode||b,u=j.join(",")}if(u)try{return I.apply(c,q.querySelectorAll(u)),c}catch(a){}finally{m||b.removeAttribute("id")}}}return ya(a.replace(R,"$1"),b,c,d)}function ja(a,b){var c=b&&a,d=c&&(~b.sourceIndex||E)-(~a.sourceIndex||E);if(d)return d;if(c)for(;c=c.nextSibling;)if(c===b)return-1;return a?1:-1}function ka(a,c,d){var e;return d?b:(e=a.getAttributeNode(c))&&e.specified?e.value:a[c]===!0?c.toLowerCase():null}function la(a,c,d){var e;return d?b:e=a.getAttribute(c,"type"===c.toLowerCase()?1:2)}function ma(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function na(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function oa(a){return ga(function(b){return b=+b,ga(function(c,d){for(var e,f=a([],c.length,b),g=f.length;g--;)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function pa(a,b){var c,d,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);for(h=a,i=[],j=e.preFilter;h;){c&&!(d=S.exec(h))||(d&&(h=h.slice(d[0].length)||h),i.push(f=[])),c=!1,(d=T.exec(h))&&(c=d.shift(),f.push({value:c,type:d[0].replace(R," ")}),h=h.slice(c.length));for(g in e.filter)!(d=Y[g].exec(h))||j[g]&&!(d=j[g](d))||(c=d.shift(),f.push({value:c,type:g,matches:d}),h=h.slice(c.length));if(!c)break}return b?h.length:h?ia.error(a):z(a,i).slice(0)}function qa(a){for(var b=0,c=a.length,d="";b<c;b++)d+=a[b].value;return d}function ra(a,b,c){var e=b.dir,f=c&&"parentNode"===e,g=x++;return b.first?function(b,c,d){for(;b=b[e];)if(1===b.nodeType||f)return a(b,c,d)}:function(b,c,h){var i,j,k,l=w+" "+g;if(h){for(;b=b[e];)if((1===b.nodeType||f)&&a(b,c,h))return!0}else for(;b=b[e];)if(1===b.nodeType||f)if(k=b[s]||(b[s]={}),(j=k[e])&&j[0]===l){if((i=j[1])===!0||i===d)return i===!0}else if(j=k[e]=[l],j[1]=a(b,c,h)||d,j[1]===!0)return!0}}function sa(a){return a.length>1?function(b,c,d){for(var e=a.length;e--;)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ta(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;h<i;h++)(f=a[h])&&(c&&!c(f,d,e)||(g.push(f),j&&b.push(h)));return g}function ua(a,b,c,d,e,f){return d&&!d[s]&&(d=ua(d)),e&&!e[s]&&(e=ua(e,f)),ga(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||xa(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:ta(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d)for(j=ta(r,n),d(j,[],h,i),k=j.length;k--;)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l));if(f){if(e||a){if(e){for(j=[],k=r.length;k--;)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}for(k=r.length;k--;)(l=r[k])&&(j=e?K.call(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=ta(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):I.apply(g,r)})}function va(a){for(var b,c,d,f=a.length,g=e.relative[a[0].type],h=g||e.relative[" "],j=g?1:0,k=ra(function(a){return a===b},h,!0),l=ra(function(a){return K.call(b,a)>-1},h,!0),m=[function(a,c,d){return!g&&(d||c!==i)||((b=c).nodeType?k(a,c,d):l(a,c,d))}];j<f;j++)if(c=e.relative[a[j].type])m=[ra(sa(m),c)];else{if(c=e.filter[a[j].type].apply(null,a[j].matches),c[s]){for(d=++j;d<f&&!e.relative[a[d].type];d++);return ua(j>1&&sa(m),j>1&&qa(a.slice(0,j-1)).replace(R,"$1"),c,j<d&&va(a.slice(j,d)),d<f&&va(a=a.slice(d)),d<f&&qa(a))}m.push(c)}return sa(m)}function wa(a,b){var c=0,f=b.length>0,g=a.length>0,h=function(h,j,k,m,n){var o,p,q,r=[],s=0,t="0",u=h&&[],v=null!=n,x=i,y=h||g&&e.find.TAG("*",n&&j.parentNode||j),z=w+=null==x?1:Math.random()||.1;for(v&&(i=j!==l&&j,d=c);null!=(o=y[t]);t++){if(g&&o){for(p=0;q=a[p++];)if(q(o,j,k)){m.push(o);break}v&&(w=z,d=++c)}f&&((o=!q&&o)&&s--,h&&u.push(o))}if(s+=t,f&&t!==s){for(p=0;q=b[p++];)q(u,r,j,k);if(h){if(s>0)for(;t--;)u[t]||r[t]||(r[t]=G.call(m));r=ta(r)}I.apply(m,r),v&&!h&&r.length>0&&s+b.length>1&&ia.uniqueSort(m)}return v&&(w=z,i=x),u};return f?ga(h):h}function xa(a,b,c){for(var d=0,e=b.length;d<e;d++)ia(a,b[d],c);return c}function ya(a,b,c,d){var f,g,i,j,k,l=pa(a);if(!d&&1===l.length){if(g=l[0]=l[0].slice(0),g.length>2&&"ID"===(i=g[0]).type&&9===b.nodeType&&n&&e.relative[g[1].type]){if(b=(e.find.ID(i.matches[0].replace(ca,da),b)||[])[0],!b)return c;a=a.slice(g.shift().value.length)}for(f=Y.needsContext.test(a)?0:g.length;f--&&(i=g[f],!e.relative[j=i.type]);)if((k=e.find[j])&&(d=k(i.matches[0].replace(ca,da),U.test(g[0].type)&&b.parentNode||b))){if(g.splice(f,1),a=d.length&&qa(g),!a)return I.apply(c,d),c;break}}return h(a,l)(d,b,!n,c,U.test(a)),c}function za(){}var c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s="sizzle"+-new Date,t=a.document,v={},w=0,x=0,y=fa(),z=fa(),A=fa(),B=!1,C=function(){return 0},D=typeof b,E=1<<31,F=[],G=F.pop,H=F.push,I=F.push,J=F.slice,K=F.indexOf||function(a){for(var b=0,c=this.length;b<c;b++)if(this[b]===a)return b;return-1},L="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",M="[\\x20\\t\\r\\n\\f]",N="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",O=N.replace("w","w#"),P="\\["+M+"*("+N+")"+M+"*(?:([*^$|!~]?=)"+M+"*(?:(['\"])((?:\\\\.|[^\\\\])*?)\\3|("+O+")|)|)"+M+"*\\]",Q=":("+N+")(?:\\(((['\"])((?:\\\\.|[^\\\\])*?)\\3|((?:\\\\.|[^\\\\()[\\]]|"+P.replace(3,8)+")*)|.*)\\)|)",R=new RegExp("^"+M+"+|((?:^|[^\\\\])(?:\\\\.)*)"+M+"+$","g"),S=new RegExp("^"+M+"*,"+M+"*"),T=new RegExp("^"+M+"*([>+~]|"+M+")"+M+"*"),U=new RegExp(M+"*[+~]"),V=new RegExp("="+M+"*([^\\]'\"]*)"+M+"*\\]","g"),W=new RegExp(Q),X=new RegExp("^"+O+"$"),Y={ID:new RegExp("^#("+N+")"),CLASS:new RegExp("^\\.("+N+")"),TAG:new RegExp("^("+N.replace("w","w*")+")"),ATTR:new RegExp("^"+P),PSEUDO:new RegExp("^"+Q),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+M+"*(even|odd|(([+-]|)(\\d*)n|)"+M+"*(?:([+-]|)"+M+"*(\\d+)|))"+M+"*\\)|)","i"),boolean:new RegExp("^(?:"+L+")$","i"),needsContext:new RegExp("^"+M+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+M+"*((?:-\\d)?\\d*)"+M+"*\\)|)(?=[^-]|$)","i")},Z=/^[^{]+\{\s*\[native \w/,$=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,_=/^(?:input|select|textarea|button)$/i,aa=/^h\d$/i,ba=/'|\\/g,ca=/\\([\da-fA-F]{1,6}[\x20\t\r\n\f]?|.)/g,da=function(a,b){var c="0x"+b-65536;return c!==c?b:c<0?String.fromCharCode(c+65536):String.fromCharCode(c>>10|55296,1023&c|56320)};try{I.apply(F=J.call(t.childNodes),t.childNodes),F[t.childNodes.length].nodeType}catch(a){I={apply:F.length?function(a,b){H.apply(a,J.call(b))}:function(a,b){for(var c=a.length,d=0;a[c++]=b[d++];);a.length=c-1}}}g=ia.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return!!b&&"HTML"!==b.nodeName},k=ia.setDocument=function(a){var c=a?a.ownerDocument||a:t;return c!==l&&9===c.nodeType&&c.documentElement?(l=c,m=c.documentElement,n=!g(c),v.getElementsByTagName=ha(function(a){return a.appendChild(c.createComment("")),!a.getElementsByTagName("*").length}),v.attributes=ha(function(a){return a.className="i",!a.getAttribute("className")}),v.getElementsByClassName=ha(function(a){return a.innerHTML="<div class='a'></div><div class='a i'></div>",a.firstChild.className="i",2===a.getElementsByClassName("i").length}),v.sortDetached=ha(function(a){return 1&a.compareDocumentPosition(l.createElement("div"))}),v.getById=ha(function(a){return m.appendChild(a).id=s,!c.getElementsByName||!c.getElementsByName(s).length}),v.getById?(e.find.ID=function(a,b){if(typeof b.getElementById!==D&&n){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},e.filter.ID=function(a){var b=a.replace(ca,da);return function(a){return a.getAttribute("id")===b}}):(e.find.ID=function(a,c){if(typeof c.getElementById!==D&&n){var d=c.getElementById(a);return d?d.id===a||typeof d.getAttributeNode!==D&&d.getAttributeNode("id").value===a?[d]:b:[]}},e.filter.ID=function(a){var b=a.replace(ca,da);return function(a){var c=typeof a.getAttributeNode!==D&&a.getAttributeNode("id");return c&&c.value===b}}),e.find.TAG=v.getElementsByTagName?function(a,b){if(typeof b.getElementsByTagName!==D)return b.getElementsByTagName(a)}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){for(;c=f[e++];)1===c.nodeType&&d.push(c);return d}return f},e.find.CLASS=v.getElementsByClassName&&function(a,b){if(typeof b.getElementsByClassName!==D&&n)return b.getElementsByClassName(a)},p=[],o=[],(v.qsa=ea(c.querySelectorAll))&&(ha(function(a){a.innerHTML="<select><option selected=''></option></select>",a.querySelectorAll("[selected]").length||o.push("\\["+M+"*(?:value|"+L+")"),a.querySelectorAll(":checked").length||o.push(":checked")}),ha(function(a){var b=l.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("t",""),a.querySelectorAll("[t^='']").length&&o.push("[*^$]="+M+"*(?:''|\"\")"),a.querySelectorAll(":enabled").length||o.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),o.push(",.*:")})),(v.matchesSelector=ea(q=m.webkitMatchesSelector||m.mozMatchesSelector||m.oMatchesSelector||m.msMatchesSelector))&&ha(function(a){v.disconnectedMatch=q.call(a,"div"),q.call(a,"[s!='']:x"),p.push("!=",Q)}),o=o.length&&new RegExp(o.join("|")),p=p.length&&new RegExp(p.join("|")),r=ea(m.contains)||m.compareDocumentPosition?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)for(;b=b.parentNode;)if(b===a)return!0;return!1},C=m.compareDocumentPosition?function(a,b){if(a===b)return B=!0,0;var d=b.compareDocumentPosition&&a.compareDocumentPosition&&a.compareDocumentPosition(b);return d?1&d||!v.sortDetached&&b.compareDocumentPosition(a)===d?a===c||r(t,a)?-1:b===c||r(t,b)?1:j?K.call(j,a)-K.call(j,b):0:4&d?-1:1:a.compareDocumentPosition?-1:1}:function(a,b){var d,e=0,f=a.parentNode,g=b.parentNode,h=[a],i=[b];if(a===b)return B=!0,0;if(!f||!g)return a===c?-1:b===c?1:f?-1:g?1:j?K.call(j,a)-K.call(j,b):0;if(f===g)return ja(a,b);for(d=a;d=d.parentNode;)h.unshift(d);for(d=b;d=d.parentNode;)i.unshift(d);for(;h[e]===i[e];)e++;return e?ja(h[e],i[e]):h[e]===t?-1:i[e]===t?1:0},l):l},ia.matches=function(a,b){return ia(a,null,null,b)},ia.matchesSelector=function(a,b){if((a.ownerDocument||a)!==l&&k(a),b=b.replace(V,"='$1']"),v.matchesSelector&&n&&(!p||!p.test(b))&&(!o||!o.test(b)))try{var c=q.call(a,b);if(c||v.disconnectedMatch||a.document&&11!==a.document.nodeType)return c}catch(a){}return ia(b,l,null,[a]).length>0},ia.contains=function(a,b){return(a.ownerDocument||a)!==l&&k(a),r(a,b)},ia.attr=function(a,c){(a.ownerDocument||a)!==l&&k(a);var d=e.attrHandle[c.toLowerCase()],f=d&&d(a,c,!n);return f===b?v.attributes||!n?a.getAttribute(c):(f=a.getAttributeNode(c))&&f.specified?f.value:null:f},ia.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},ia.uniqueSort=function(a){var b,c=[],d=0,e=0;if(B=!v.detectDuplicates,j=!v.sortStable&&a.slice(0),a.sort(C),B){for(;b=a[e++];)b===a[e]&&(d=c.push(e));for(;d--;)a.splice(c[d],1)}return a},f=ia.getText=function(a){var b,c="",d=0,e=a.nodeType;if(e){if(1===e||9===e||11===e){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=f(a)}else if(3===e||4===e)return a.nodeValue}else for(;b=a[d];d++)c+=f(b);return c},e=ia.selectors={cacheLength:50,createPseudo:ga,match:Y,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(ca,da),a[3]=(a[4]||a[5]||"").replace(ca,da),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||ia.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&ia.error(a[0]),a},PSEUDO:function(a){var b,c=!a[5]&&a[2];return Y.CHILD.test(a[0])?null:(a[4]?a[2]=a[4]:c&&W.test(c)&&(b=pa(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(ca,da).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+M+")"+a+"("+M+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||typeof a.getAttribute!==D&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=ia.attr(d,a);return null==e?"!="===b:!b||(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e+" ").indexOf(c)>-1:"|="===b&&(e===c||e.slice(0,c.length+1)===c+"-"))}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),t=!i&&!h;if(q){if(f){for(;p;){for(l=b;l=l[p];)if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&t){for(k=q[s]||(q[s]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];l=++n&&l&&l[p]||(m=n=0)||o.pop();)if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(t&&(j=(b[s]||(b[s]={}))[a])&&j[0]===w)m=j[1];else for(;(l=++n&&l&&l[p]||(m=n=0)||o.pop())&&((h?l.nodeName.toLowerCase()!==r:1!==l.nodeType)||!++m||(t&&((l[s]||(l[s]={}))[a]=[w,m]),l!==b)););return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,d=e.pseudos[a]||e.setFilters[a.toLowerCase()]||ia.error("unsupported pseudo: "+a);return d[s]?d(b):d.length>1?(c=[a,a,"",b],e.setFilters.hasOwnProperty(a.toLowerCase())?ga(function(a,c){for(var e,f=d(a,b),g=f.length;g--;)e=K.call(a,f[g]),a[e]=!(c[e]=f[g])}):function(a){return d(a,0,c)}):d}},pseudos:{not:ga(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[s]?ga(function(a,b,c,e){for(var f,g=d(a,null,e,[]),h=a.length;h--;)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),!c.pop()}}),has:ga(function(a){return function(b){return ia(a,b).length>0}}),contains:ga(function(a){return function(b){return(b.textContent||b.innerText||f(b)).indexOf(a)>-1}}),lang:ga(function(a){return X.test(a||"")||ia.error("unsupported lang: "+a),a=a.replace(ca,da).toLowerCase(),function(b){var c;do if(c=n?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===m},focus:function(a){return a===l.activeElement&&(!l.hasFocus||l.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeName>"@"||3===a.nodeType||4===a.nodeType)return!1;return!0},parent:function(a){return!e.pseudos.empty(a)},header:function(a){return aa.test(a.nodeName)},input:function(a){return _.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||b.toLowerCase()===a.type)},first:oa(function(){return[0]}),last:oa(function(a,b){return[b-1]}),eq:oa(function(a,b,c){return[c<0?c+b:c]}),even:oa(function(a,b){for(var c=0;c<b;c+=2)a.push(c);return a}),odd:oa(function(a,b){for(var c=1;c<b;c+=2)a.push(c);return a}),lt:oa(function(a,b,c){for(var d=c<0?c+b:c;--d>=0;)a.push(d);return a}),gt:oa(function(a,b,c){for(var d=c<0?c+b:c;++d<b;)a.push(d);return a})}};for(c in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})e.pseudos[c]=ma(c);for(c in{submit:!0,reset:!0})e.pseudos[c]=na(c);h=ia.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){for(b||(b=pa(a)),c=b.length;c--;)f=va(b[c]),f[s]?d.push(f):e.push(f);f=A(a,wa(e,d))}return f},e.pseudos.nth=e.pseudos.eq,za.prototype=e.filters=e.pseudos,e.setFilters=new za,v.sortStable=s.split("").sort(C).join("")===s,k(),[0,0].sort(C),v.detectDuplicates=B,ha(function(a){if(a.innerHTML="<a href='#'></a>","#"!==a.firstChild.getAttribute("href"))for(var b="type|href|height|width".split("|"),c=b.length;c--;)e.attrHandle[b[c]]=la}),ha(function(a){if(null!=a.getAttribute("disabled"))for(var b=L.split("|"),c=b.length;c--;)e.attrHandle[b[c]]=ka}),u.find=ia,u.expr=ia.selectors,u.expr[":"]=u.expr.pseudos,u.unique=ia.uniqueSort,u.text=ia.getText,u.isXMLDoc=ia.isXML,u.contains=ia.contains}(a);var E={};u.Callbacks=function(a){a="string"==typeof a?E[a]||F(a):u.extend({},a);var c,d,e,f,g,h,i=[],j=!a.once&&[],k=function(b){for(c=a.memory&&b,d=!0,h=f||0,f=0,g=i.length,e=!0;i&&h<g;h++)if(i[h].apply(b[0],b[1])===!1&&a.stopOnFalse){c=!1;break}e=!1,i&&(j?j.length&&k(j.shift()):c?i=[]:l.disable())},l={add:function(){if(i){var b=i.length;!function b(c){u.each(c,function(c,d){var e=u.type(d);"function"===e?a.unique&&l.has(d)||i.push(d):d&&d.length&&"string"!==e&&b(d)})}(arguments),e?g=i.length:c&&(f=b,k(c))}return this},remove:function(){return i&&u.each(arguments,function(a,b){for(var c;(c=u.inArray(b,i,c))>-1;)i.splice(c,1),e&&(c<=g&&g--,c<=h&&h--)}),this},has:function(a){return a?u.inArray(a,i)>-1:!(!i||!i.length)},empty:function(){return i=[],g=0,this},disable:function(){return i=j=c=b,this},disabled:function(){return!i},lock:function(){return j=b,c||l.disable(),this},locked:function(){return!j},fireWith:function(a,b){return b=b||[],b=[a,b.slice?b.slice():b],!i||d&&!j||(e?j.push(b):k(b)),this},fire:function(){return l.fireWith(this,arguments),this},fired:function(){return!!d}};return l},u.extend({Deferred:function(a){var b=[["resolve","done",u.Callbacks("once memory"),"resolved"],["reject","fail",u.Callbacks("once memory"),"rejected"],["notify","progress",u.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return u.Deferred(function(c){u.each(b,function(b,f){var g=f[0],h=u.isFunction(a[b])&&a[b];e[f[1]](function(){var a=h&&h.apply(this,arguments);a&&u.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[g+"With"](this===d?c.promise():this,h?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?u.extend(a,d):d}},e={};return d.pipe=d.then,u.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var h,i,j,b=0,c=p.call(arguments),d=c.length,e=1!==d||a&&u.isFunction(a.promise)?d:0,f=1===e?a:u.Deferred(),g=function(a,b,c){return function(d){b[a]=this,c[a]=arguments.length>1?p.call(arguments):d,c===h?f.notifyWith(b,c):--e||f.resolveWith(b,c)}};if(d>1)for(h=new Array(d),i=new Array(d),j=new Array(d);b<d;b++)c[b]&&u.isFunction(c[b].promise)?c[b].promise().done(g(b,j,c)).fail(f.reject).progress(g(b,i,h)):--e;return e||f.resolveWith(j,c),f.promise()}}),u.support=function(b){var c=g.createElement("input"),d=g.createDocumentFragment(),e=g.createElement("div"),f=g.createElement("select"),h=f.appendChild(g.createElement("option"));return c.type?(c.type="checkbox",b.checkOn=""!==c.value,b.optSelected=h.selected,b.reliableMarginRight=!0,b.boxSizingReliable=!0,b.pixelPosition=!1,c.checked=!0,b.noCloneChecked=c.cloneNode(!0).checked,f.disabled=!0,b.optDisabled=!h.disabled,c=g.createElement("input"),c.value="t",c.type="radio",b.radioValue="t"===c.value,c.setAttribute("checked","t"),c.setAttribute("name","t"),d.appendChild(c),b.checkClone=d.cloneNode(!0).cloneNode(!0).lastChild.checked,b.focusinBubbles="onfocusin"in a,e.style.backgroundClip="content-box",e.cloneNode(!0).style.backgroundClip="",b.clearCloneStyle="content-box"===e.style.backgroundClip,u(function(){var c,d,f="padding:0;margin:0;border:0;display:block;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box",h=g.getElementsByTagName("body")[0];h&&(c=g.createElement("div"),c.style.cssText="border:0;width:0;height:0;position:absolute;top:0;left:-9999px;margin-top:1px",h.appendChild(c).appendChild(e),e.innerHTML="",e.style.cssText="-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:1px;border:1px;display:block;width:4px;margin-top:1%;position:absolute;top:1%",u.swap(h,null!=h.style.zoom?{zoom:1}:{},function(){b.boxSizing=4===e.offsetWidth}),a.getComputedStyle&&(b.pixelPosition="1%"!==(a.getComputedStyle(e,null)||{}).top,b.boxSizingReliable="4px"===(a.getComputedStyle(e,null)||{width:"4px"}).width,d=e.appendChild(g.createElement("div")),d.style.cssText=e.style.cssText=f,d.style.marginRight=d.style.width="0",e.style.width="1px",b.reliableMarginRight=!parseFloat((a.getComputedStyle(d,null)||{}).marginRight)),h.removeChild(c))}),b):b}({});var G,H,I=/(?:\{[\s\S]*\}|\[[\s\S]*\])$/,J=/([A-Z])/g;K.uid=1,K.accepts=function(a){return!a.nodeType||(1===a.nodeType||9===a.nodeType)},K.prototype={key:function(a){if(!K.accepts(a))return 0;var b={},c=a[this.expando];if(!c){c=K.uid++;try{b[this.expando]={value:c},Object.defineProperties(a,b)}catch(d){b[this.expando]=c,u.extend(a,b)}}return this.cache[c]||(this.cache[c]={}),c},set:function(a,b,c){var d,e=this.key(a),f=this.cache[e];if("string"==typeof b)f[b]=c;else if(u.isEmptyObject(f))this.cache[e]=b;else for(d in b)f[d]=b[d]},get:function(a,c){var d=this.cache[this.key(a)];return c===b?d:d[c]},access:function(a,c,d){return c===b||c&&"string"==typeof c&&d===b?this.get(a,c):(this.set(a,c,d),d!==b?d:c)},remove:function(a,c){var d,e,f=this.key(a),g=this.cache[f];if(c===b)this.cache[f]={};else{u.isArray(c)?e=c.concat(c.map(u.camelCase)):c in g?e=[c]:(e=u.camelCase(c),e=e in g?[e]:e.match(w)||[]),d=e.length;for(;d--;)delete g[e[d]]}},hasData:function(a){return!u.isEmptyObject(this.cache[a[this.expando]]||{})},discard:function(a){delete this.cache[this.key(a)]}},G=new K,H=new K,u.extend({acceptData:K.accepts,hasData:function(a){return G.hasData(a)||H.hasData(a)},data:function(a,b,c){return G.access(a,b,c)},removeData:function(a,b){G.remove(a,b)},_data:function(a,b,c){return H.access(a,b,c)},_removeData:function(a,b){H.remove(a,b)}}),u.fn.extend({data:function(a,c){var d,e,f=this[0],g=0,h=null;if(a===b){if(this.length&&(h=G.get(f),1===f.nodeType&&!H.get(f,"hasDataAttrs"))){for(d=f.attributes;g<d.length;g++)e=d[g].name,0===e.indexOf("data-")&&(e=u.camelCase(e.substring(5)),L(f,e,h[e]));H.set(f,"hasDataAttrs",!0)}return h}return"object"==typeof a?this.each(function(){G.set(this,a)}):u.access(this,function(c){var d,e=u.camelCase(a);if(f&&c===b){if(d=G.get(f,a),d!==b)return d;if(d=G.get(f,e),d!==b)return d;if(d=L(f,e,b),d!==b)return d}else this.each(function(){var d=G.get(this,e);G.set(this,e,c),a.indexOf("-")!==-1&&d!==b&&G.set(this,a,c)})},null,c,arguments.length>1,null,!0)},removeData:function(a){return this.each(function(){G.remove(this,a)})}}),u.extend({queue:function(a,b,c){var d;if(a)return b=(b||"fx")+"queue",d=H.get(a,b),c&&(!d||u.isArray(c)?d=H.access(a,b,u.makeArray(c)):d.push(c)),d||[]},dequeue:function(a,b){b=b||"fx";var c=u.queue(a,b),d=c.length,e=c.shift(),f=u._queueHooks(a,b),g=function(){u.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),f.cur=e,e&&("fx"===b&&c.unshift("inprogress"),delete f.stop,e.call(a,g,f)),!d&&f&&f.empty.fire()},_queueHooks:function(a,b){var c=b+"queueHooks";return H.get(a,c)||H.access(a,c,{empty:u.Callbacks("once memory").add(function(){H.remove(a,[b+"queue",c])})})}}),u.fn.extend({queue:function(a,c){var d=2;return"string"!=typeof a&&(c=a,a="fx",d--),arguments.length<d?u.queue(this[0],a):c===b?this:this.each(function(){var b=u.queue(this,a,c);u._queueHooks(this,a),"fx"===a&&"inprogress"!==b[0]&&u.dequeue(this,a)})},dequeue:function(a){return this.each(function(){u.dequeue(this,a)})},delay:function(a,b){return a=u.fx?u.fx.speeds[a]||a:a,b=b||"fx",this.queue(b,function(b,c){var d=setTimeout(b,a);c.stop=function(){clearTimeout(d)}})},clearQueue:function(a){return this.queue(a||"fx",[])},promise:function(a,c){var d,e=1,f=u.Deferred(),g=this,h=this.length,i=function(){--e||f.resolveWith(g,[g])};for("string"!=typeof a&&(c=a,a=b),a=a||"fx";h--;)d=H.get(g[h],a+"queueHooks"),d&&d.empty&&(e++,d.empty.add(i));return i(),f.promise(c)}});var M,N,O=/[\t\r\n]/g,P=/\r/g,Q=/^(?:input|select|textarea|button)$/i;u.fn.extend({attr:function(a,b){return u.access(this,u.attr,a,b,arguments.length>1)},removeAttr:function(a){return this.each(function(){u.removeAttr(this,a)})},prop:function(a,b){return u.access(this,u.prop,a,b,arguments.length>1)},removeProp:function(a){return this.each(function(){delete this[u.propFix[a]||a]})},addClass:function(a){var b,c,d,e,f,g=0,h=this.length,i="string"==typeof a&&a;if(u.isFunction(a))return this.each(function(b){u(this).addClass(a.call(this,b,this.className))});if(i)for(b=(a||"").match(w)||[];g<h;g++)if(c=this[g],d=1===c.nodeType&&(c.className?(" "+c.className+" ").replace(O," "):" ")){for(f=0;e=b[f++];)d.indexOf(" "+e+" ")<0&&(d+=e+" ");c.className=u.trim(d)}return this},removeClass:function(a){var b,c,d,e,f,g=0,h=this.length,i=0===arguments.length||"string"==typeof a&&a;if(u.isFunction(a))return this.each(function(b){u(this).removeClass(a.call(this,b,this.className))});if(i)for(b=(a||"").match(w)||[];g<h;g++)if(c=this[g],d=1===c.nodeType&&(c.className?(" "+c.className+" ").replace(O," "):"")){for(f=0;e=b[f++];)for(;d.indexOf(" "+e+" ")>=0;)d=d.replace(" "+e+" "," ");c.className=a?u.trim(d):""}return this},toggleClass:function(a,b){var c=typeof a,d="boolean"==typeof b;return u.isFunction(a)?this.each(function(c){u(this).toggleClass(a.call(this,c,this.className,b),b)}):this.each(function(){if("string"===c)for(var f,g=0,h=u(this),i=b,j=a.match(w)||[];f=j[g++];)i=d?i:!h.hasClass(f),h[i?"addClass":"removeClass"](f);else c!==e&&"boolean"!==c||(this.className&&H.set(this,"__className__",this.className),this.className=this.className||a===!1?"":H.get(this,"__className__")||"")})},hasClass:function(a){for(var b=" "+a+" ",c=0,d=this.length;c<d;c++)if(1===this[c].nodeType&&(" "+this[c].className+" ").replace(O," ").indexOf(b)>=0)return!0;return!1},val:function(a){var c,d,e,f=this[0];{if(arguments.length)return e=u.isFunction(a),this.each(function(d){var f,g=u(this);1===this.nodeType&&(f=e?a.call(this,d,g.val()):a,null==f?f="":"number"==typeof f?f+="":u.isArray(f)&&(f=u.map(f,function(a){return null==a?"":a+""})),c=u.valHooks[this.type]||u.valHooks[this.nodeName.toLowerCase()],c&&"set"in c&&c.set(this,f,"value")!==b||(this.value=f))});if(f)return c=u.valHooks[f.type]||u.valHooks[f.nodeName.toLowerCase()],c&&"get"in c&&(d=c.get(f,"value"))!==b?d:(d=f.value,"string"==typeof d?d.replace(P,""):null==d?"":d)}}}),u.extend({valHooks:{option:{get:function(a){var b=a.attributes.value;return!b||b.specified?a.value:a.text}},select:{get:function(a){for(var b,c,d=a.options,e=a.selectedIndex,f="select-one"===a.type||e<0,g=f?null:[],h=f?e+1:d.length,i=e<0?h:f?e:0;i<h;i++)if(c=d[i],(c.selected||i===e)&&(u.support.optDisabled?!c.disabled:null===c.getAttribute("disabled"))&&(!c.parentNode.disabled||!u.nodeName(c.parentNode,"optgroup"))){if(b=u(c).val(),f)return b;g.push(b)}return g},set:function(a,b){for(var c,d,e=a.options,f=u.makeArray(b),g=e.length;g--;)d=e[g],(d.selected=u.inArray(u(d).val(),f)>=0)&&(c=!0);return c||(a.selectedIndex=-1),f}}},attr:function(a,c,d){var f,g,h=a.nodeType;if(a&&3!==h&&8!==h&&2!==h)return typeof a.getAttribute===e?u.prop(a,c,d):(1===h&&u.isXMLDoc(a)||(c=c.toLowerCase(),f=u.attrHooks[c]||(u.expr.match.boolean.test(c)?N:M)),d===b?f&&"get"in f&&null!==(g=f.get(a,c))?g:(g=u.find.attr(a,c),null==g?b:g):null!==d?f&&"set"in f&&(g=f.set(a,d,c))!==b?g:(a.setAttribute(c,d+""),d):void u.removeAttr(a,c))},removeAttr:function(a,b){var c,d,e=0,f=b&&b.match(w);if(f&&1===a.nodeType)for(;c=f[e++];)d=u.propFix[c]||c,u.expr.match.boolean.test(c)&&(a[d]=!1),a.removeAttribute(c)},attrHooks:{type:{set:function(a,b){if(!u.support.radioValue&&"radio"===b&&u.nodeName(a,"input")){var c=a.value;return a.setAttribute("type",b),c&&(a.value=c),b}}}},propFix:{for:"htmlFor",class:"className"},prop:function(a,c,d){var e,f,g,h=a.nodeType;if(a&&3!==h&&8!==h&&2!==h)return g=1!==h||!u.isXMLDoc(a),g&&(c=u.propFix[c]||c,f=u.propHooks[c]),d!==b?f&&"set"in f&&(e=f.set(a,d,c))!==b?e:a[c]=d:f&&"get"in f&&null!==(e=f.get(a,c))?e:a[c]},propHooks:{tabIndex:{get:function(a){return a.hasAttribute("tabindex")||Q.test(a.nodeName)||a.href?a.tabIndex:-1}}}}),N={set:function(a,b,c){return b===!1?u.removeAttr(a,c):a.setAttribute(c,c),c}},u.each(u.expr.match.boolean.source.match(/\w+/g),function(a,c){var d=u.expr.attrHandle[c]||u.find.attr;u.expr.attrHandle[c]=function(a,c,e){var f=u.expr.attrHandle[c],g=e?b:(u.expr.attrHandle[c]=b)!=d(a,c,e)?c.toLowerCase():null;return u.expr.attrHandle[c]=f,g}}),u.support.optSelected||(u.propHooks.selected={get:function(a){var b=a.parentNode;return b&&b.parentNode&&b.parentNode.selectedIndex,null}}),u.each(["tabIndex","readOnly","maxLength","cellSpacing","cellPadding","rowSpan","colSpan","useMap","frameBorder","contentEditable"],function(){u.propFix[this.toLowerCase()]=this}),u.each(["radio","checkbox"],function(){u.valHooks[this]={set:function(a,b){if(u.isArray(b))return a.checked=u.inArray(u(a).val(),b)>=0}},u.support.checkOn||(u.valHooks[this].get=function(a){return null===a.getAttribute("value")?"on":a.value})});var R=/^key/,S=/^(?:mouse|contextmenu)|click/,T=/^(?:focusinfocus|focusoutblur)$/,U=/^([^.]*)(?:\.(.+)|)$/;u.event={global:{},add:function(a,c,d,f,g){var h,i,j,k,l,m,n,o,p,q,r,s=H.get(a);if(s){for(d.handler&&(h=d,d=h.handler,g=h.selector),d.guid||(d.guid=u.guid++),(k=s.events)||(k=s.events={}),(i=s.handle)||(i=s.handle=function(a){return typeof u===e||a&&u.event.triggered===a.type?b:u.event.dispatch.apply(i.elem,arguments)},i.elem=a),c=(c||"").match(w)||[""],l=c.length;l--;)j=U.exec(c[l])||[],p=r=j[1],q=(j[2]||"").split(".").sort(),p&&(n=u.event.special[p]||{},p=(g?n.delegateType:n.bindType)||p,n=u.event.special[p]||{},m=u.extend({type:p,origType:r,data:f,handler:d,guid:d.guid,selector:g,needsContext:g&&u.expr.match.needsContext.test(g),namespace:q.join(".")},h),(o=k[p])||(o=k[p]=[],o.delegateCount=0,n.setup&&n.setup.call(a,f,q,i)!==!1||a.addEventListener&&a.addEventListener(p,i,!1)),n.add&&(n.add.call(a,m),m.handler.guid||(m.handler.guid=d.guid)),g?o.splice(o.delegateCount++,0,m):o.push(m),u.event.global[p]=!0);a=null}},remove:function(a,b,c,d,e){var f,g,h,i,j,k,l,m,n,o,p,q=H.hasData(a)&&H.get(a);if(q&&(i=q.events)){for(b=(b||"").match(w)||[""],j=b.length;j--;)if(h=U.exec(b[j])||[],n=p=h[1],o=(h[2]||"").split(".").sort(),n){for(l=u.event.special[n]||{},n=(d?l.delegateType:l.bindType)||n,m=i[n]||[],h=h[2]&&new RegExp("(^|\\.)"+o.join("\\.(?:.*\\.|)")+"(\\.|$)"),g=f=m.length;f--;)k=m[f],!e&&p!==k.origType||c&&c.guid!==k.guid||h&&!h.test(k.namespace)||d&&d!==k.selector&&("**"!==d||!k.selector)||(m.splice(f,1),k.selector&&m.delegateCount--,l.remove&&l.remove.call(a,k));g&&!m.length&&(l.teardown&&l.teardown.call(a,o,q.handle)!==!1||u.removeEvent(a,n,q.handle),delete i[n])}else for(n in i)u.event.remove(a,n+b[j],c,d,!0);u.isEmptyObject(i)&&(delete q.handle,H.remove(a,"events"))}},trigger:function(c,d,e,f){var h,i,j,k,l,m,n,o=[e||g],p=s.call(c,"type")?c.type:c,q=s.call(c,"namespace")?c.namespace.split("."):[];if(i=j=e=e||g,3!==e.nodeType&&8!==e.nodeType&&!T.test(p+u.event.triggered)&&(p.indexOf(".")>=0&&(q=p.split("."),p=q.shift(),q.sort()),l=p.indexOf(":")<0&&"on"+p,c=c[u.expando]?c:new u.Event(p,"object"==typeof c&&c),
-c.isTrigger=f?2:3,c.namespace=q.join("."),c.namespace_re=c.namespace?new RegExp("(^|\\.)"+q.join("\\.(?:.*\\.|)")+"(\\.|$)"):null,c.result=b,c.target||(c.target=e),d=null==d?[c]:u.makeArray(d,[c]),n=u.event.special[p]||{},f||!n.trigger||n.trigger.apply(e,d)!==!1)){if(!f&&!n.noBubble&&!u.isWindow(e)){for(k=n.delegateType||p,T.test(k+p)||(i=i.parentNode);i;i=i.parentNode)o.push(i),j=i;j===(e.ownerDocument||g)&&o.push(j.defaultView||j.parentWindow||a)}for(h=0;(i=o[h++])&&!c.isPropagationStopped();)c.type=h>1?k:n.bindType||p,m=(H.get(i,"events")||{})[c.type]&&H.get(i,"handle"),m&&m.apply(i,d),m=l&&i[l],m&&u.acceptData(i)&&m.apply&&m.apply(i,d)===!1&&c.preventDefault();return c.type=p,f||c.isDefaultPrevented()||n._default&&n._default.apply(o.pop(),d)!==!1||!u.acceptData(e)||l&&u.isFunction(e[p])&&!u.isWindow(e)&&(j=e[l],j&&(e[l]=null),u.event.triggered=p,e[p](),u.event.triggered=b,j&&(e[l]=j)),c.result}},dispatch:function(a){a=u.event.fix(a);var c,d,e,f,g,h=[],i=p.call(arguments),j=(H.get(this,"events")||{})[a.type]||[],k=u.event.special[a.type]||{};if(i[0]=a,a.delegateTarget=this,!k.preDispatch||k.preDispatch.call(this,a)!==!1){for(h=u.event.handlers.call(this,a,j),c=0;(f=h[c++])&&!a.isPropagationStopped();)for(a.currentTarget=f.elem,d=0;(g=f.handlers[d++])&&!a.isImmediatePropagationStopped();)a.namespace_re&&!a.namespace_re.test(g.namespace)||(a.handleObj=g,a.data=g.data,e=((u.event.special[g.origType]||{}).handle||g.handler).apply(f.elem,i),e!==b&&(a.result=e)===!1&&(a.preventDefault(),a.stopPropagation()));return k.postDispatch&&k.postDispatch.call(this,a),a.result}},handlers:function(a,c){var d,e,f,g,h=[],i=c.delegateCount,j=a.target;if(i&&j.nodeType&&(!a.button||"click"!==a.type))for(;j!==this;j=j.parentNode||this)if(j.disabled!==!0||"click"!==a.type){for(e=[],d=0;d<i;d++)g=c[d],f=g.selector+" ",e[f]===b&&(e[f]=g.needsContext?u(f,this).index(j)>=0:u.find(f,this,null,[j]).length),e[f]&&e.push(g);e.length&&h.push({elem:j,handlers:e})}return i<c.length&&h.push({elem:this,handlers:c.slice(i)}),h},props:"altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(a,b){return null==a.which&&(a.which=null!=b.charCode?b.charCode:b.keyCode),a}},mouseHooks:{props:"button buttons clientX clientY offsetX offsetY pageX pageY screenX screenY toElement".split(" "),filter:function(a,c){var d,e,f,h=c.button;return null==a.pageX&&null!=c.clientX&&(d=a.target.ownerDocument||g,e=d.documentElement,f=d.body,a.pageX=c.clientX+(e&&e.scrollLeft||f&&f.scrollLeft||0)-(e&&e.clientLeft||f&&f.clientLeft||0),a.pageY=c.clientY+(e&&e.scrollTop||f&&f.scrollTop||0)-(e&&e.clientTop||f&&f.clientTop||0)),a.which||h===b||(a.which=1&h?1:2&h?3:4&h?2:0),a}},fix:function(a){if(a[u.expando])return a;var b,c,d,e=a.type,f=a,g=this.fixHooks[e];for(g||(this.fixHooks[e]=g=S.test(e)?this.mouseHooks:R.test(e)?this.keyHooks:{}),d=g.props?this.props.concat(g.props):this.props,a=new u.Event(f),b=d.length;b--;)c=d[b],a[c]=f[c];return 3===a.target.nodeType&&(a.target=a.target.parentNode),g.filter?g.filter(a,f):a},special:{load:{noBubble:!0},focus:{trigger:function(){if(this!==X()&&this.focus)return this.focus(),!1},delegateType:"focusin"},blur:{trigger:function(){if(this===X()&&this.blur)return this.blur(),!1},delegateType:"focusout"},click:{trigger:function(){if("checkbox"===this.type&&this.click&&u.nodeName(this,"input"))return this.click(),!1},_default:function(a){return u.nodeName(a.target,"a")}},beforeunload:{postDispatch:function(a){a.result!==b&&(a.originalEvent.returnValue=a.result)}}},simulate:function(a,b,c,d){var e=u.extend(new u.Event,c,{type:a,isSimulated:!0,originalEvent:{}});d?u.event.trigger(e,null,b):u.event.dispatch.call(b,e),e.isDefaultPrevented()&&c.preventDefault()}},u.removeEvent=function(a,b,c){a.removeEventListener&&a.removeEventListener(b,c,!1)},u.Event=function(a,b){return this instanceof u.Event?(a&&a.type?(this.originalEvent=a,this.type=a.type,this.isDefaultPrevented=a.defaultPrevented||a.getPreventDefault&&a.getPreventDefault()?V:W):this.type=a,b&&u.extend(this,b),this.timeStamp=a&&a.timeStamp||u.now(),void(this[u.expando]=!0)):new u.Event(a,b)},u.Event.prototype={isDefaultPrevented:W,isPropagationStopped:W,isImmediatePropagationStopped:W,preventDefault:function(){var a=this.originalEvent;this.isDefaultPrevented=V,a&&a.preventDefault&&a.preventDefault()},stopPropagation:function(){var a=this.originalEvent;this.isPropagationStopped=V,a&&a.stopPropagation&&a.stopPropagation()},stopImmediatePropagation:function(){this.isImmediatePropagationStopped=V,this.stopPropagation()}},u.each({mouseenter:"mouseover",mouseleave:"mouseout"},function(a,b){u.event.special[a]={delegateType:b,bindType:b,handle:function(a){var c,d=this,e=a.relatedTarget,f=a.handleObj;return e&&(e===d||u.contains(d,e))||(a.type=f.origType,c=f.handler.apply(this,arguments),a.type=b),c}}}),u.support.focusinBubbles||u.each({focus:"focusin",blur:"focusout"},function(a,b){var c=0,d=function(a){u.event.simulate(b,a.target,u.event.fix(a),!0)};u.event.special[b]={setup:function(){0===c++&&g.addEventListener(a,d,!0)},teardown:function(){0===--c&&g.removeEventListener(a,d,!0)}}}),u.fn.extend({on:function(a,c,d,e,f){var g,h;if("object"==typeof a){"string"!=typeof c&&(d=d||c,c=b);for(h in a)this.on(h,c,d,a[h],f);return this}if(null==d&&null==e?(e=c,d=c=b):null==e&&("string"==typeof c?(e=d,d=b):(e=d,d=c,c=b)),e===!1)e=W;else if(!e)return this;return 1===f&&(g=e,e=function(a){return u().off(a),g.apply(this,arguments)},e.guid=g.guid||(g.guid=u.guid++)),this.each(function(){u.event.add(this,a,e,d,c)})},one:function(a,b,c,d){return this.on(a,b,c,d,1)},off:function(a,c,d){var e,f;if(a&&a.preventDefault&&a.handleObj)return e=a.handleObj,u(a.delegateTarget).off(e.namespace?e.origType+"."+e.namespace:e.origType,e.selector,e.handler),this;if("object"==typeof a){for(f in a)this.off(f,c,a[f]);return this}return c!==!1&&"function"!=typeof c||(d=c,c=b),d===!1&&(d=W),this.each(function(){u.event.remove(this,a,d,c)})},trigger:function(a,b){return this.each(function(){u.event.trigger(a,b,this)})},triggerHandler:function(a,b){var c=this[0];if(c)return u.event.trigger(a,b,c,!0)}});var Y=/^.[^:#\[\.,]*$/,Z=u.expr.match.needsContext,$={children:!0,contents:!0,next:!0,prev:!0};u.fn.extend({find:function(a){var b,c,d,e=this.length;if("string"!=typeof a)return b=this,this.pushStack(u(a).filter(function(){for(d=0;d<e;d++)if(u.contains(b[d],this))return!0}));for(c=[],d=0;d<e;d++)u.find(a,this[d],c);return c=this.pushStack(e>1?u.unique(c):c),c.selector=(this.selector?this.selector+" ":"")+a,c},has:function(a){var b=u(a,this),c=b.length;return this.filter(function(){for(var a=0;a<c;a++)if(u.contains(this,b[a]))return!0})},not:function(a){return this.pushStack(aa(this,a||[],!0))},filter:function(a){return this.pushStack(aa(this,a||[],!1))},is:function(a){return!!a&&("string"==typeof a?Z.test(a)?u(a,this.context).index(this[0])>=0:u.filter(a,this).length>0:this.filter(a).length>0)},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=Z.test(a)||"string"!=typeof a?u(a,b||this.context):0;d<e;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&u.find.matchesSelector(c,a))){c=f.push(c);break}return this.pushStack(f.length>1?u.unique(f):f)},index:function(a){return a?"string"==typeof a?q.call(u(a),this[0]):q.call(this,a.jquery?a[0]:a):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){var c="string"==typeof a?u(a,b):u.makeArray(a&&a.nodeType?[a]:a),d=u.merge(this.get(),c);return this.pushStack(u.unique(d))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}}),u.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return u.dir(a,"parentNode")},parentsUntil:function(a,b,c){return u.dir(a,"parentNode",c)},next:function(a){return _(a,"nextSibling")},prev:function(a){return _(a,"previousSibling")},nextAll:function(a){return u.dir(a,"nextSibling")},prevAll:function(a){return u.dir(a,"previousSibling")},nextUntil:function(a,b,c){return u.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return u.dir(a,"previousSibling",c)},siblings:function(a){return u.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return u.sibling(a.firstChild)},contents:function(a){return u.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:u.merge([],a.childNodes)}},function(a,b){u.fn[a]=function(c,d){var e=u.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=u.filter(d,e)),this.length>1&&($[a]||u.unique(e),"p"===a[0]&&e.reverse()),this.pushStack(e)}}),u.extend({filter:function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?u.find.matchesSelector(d,a)?[d]:[]:u.find.matches(a,u.grep(b,function(a){return 1===a.nodeType}))},dir:function(a,c,d){for(var e=[],f=d!==b;(a=a[c])&&9!==a.nodeType;)if(1===a.nodeType){if(f&&u(a).is(d))break;e.push(a)}return e},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}});var ba=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,ca=/<([\w:]+)/,da=/<|&#?\w+;/,ea=/<(?:script|style|link)/i,fa=/^(?:checkbox|radio)$/i,ga=/checked\s*(?:[^=]|=\s*.checked.)/i,ha=/^$|\/(?:java|ecma)script/i,ia=/^true\/(.*)/,ja=/^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,ka={option:[1,"<select multiple='multiple'>","</select>"],thead:[1,"<table>","</table>"],tr:[2,"<table><tbody>","</tbody></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],_default:[0,"",""]};ka.optgroup=ka.option,ka.tbody=ka.tfoot=ka.colgroup=ka.caption=ka.col=ka.thead,ka.th=ka.td,u.fn.extend({text:function(a){return u.access(this,function(a){return a===b?u.text(this):this.empty().append((this[0]&&this[0].ownerDocument||g).createTextNode(a))},null,a,arguments.length)},append:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=la(this,a);b.appendChild(a)}})},prepend:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=la(this,a);b.insertBefore(a,b.firstChild)}})},before:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this)})},after:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this.nextSibling)})},remove:function(a,b){for(var c,d=a?u.filter(a,this):this,e=0;null!=(c=d[e]);e++)b||1!==c.nodeType||u.cleanData(qa(c)),c.parentNode&&(b&&u.contains(c.ownerDocument,c)&&oa(qa(c,"script")),c.parentNode.removeChild(c));return this},empty:function(){for(var a,b=0;null!=(a=this[b]);b++)1===a.nodeType&&(u.cleanData(qa(a,!1)),a.textContent="");return this},clone:function(a,b){return a=null!=a&&a,b=null==b?a:b,this.map(function(){return u.clone(this,a,b)})},html:function(a){return u.access(this,function(a){var c=this[0]||{},d=0,e=this.length;if(a===b&&1===c.nodeType)return c.innerHTML;if("string"==typeof a&&!ea.test(a)&&!ka[(ca.exec(a)||["",""])[1].toLowerCase()]){a=a.replace(ba,"<$1></$2>");try{for(;d<e;d++)c=this[d]||{},1===c.nodeType&&(u.cleanData(qa(c,!1)),c.innerHTML=a);c=0}catch(a){}}c&&this.empty().append(a)},null,a,arguments.length)},replaceWith:function(){var a=u.map(this,function(a){return[a.nextSibling,a.parentNode]}),b=0;return this.domManip(arguments,function(c){var d=a[b++],e=a[b++];e&&(u(this).remove(),e.insertBefore(c,d))},!0),b?this:this.remove()},detach:function(a){return this.remove(a,!0)},domManip:function(a,b,c){a=n.apply([],a);var d,e,f,g,h,i,j=0,k=this.length,l=this,m=k-1,o=a[0],p=u.isFunction(o);if(p||!(k<=1||"string"!=typeof o||u.support.checkClone)&&ga.test(o))return this.each(function(d){var e=l.eq(d);p&&(a[0]=o.call(this,d,e.html())),e.domManip(a,b,c)});if(k&&(d=u.buildFragment(a,this[0].ownerDocument,!1,!c&&this),e=d.firstChild,1===d.childNodes.length&&(d=e),e)){for(f=u.map(qa(d,"script"),ma),g=f.length;j<k;j++)h=d,j!==m&&(h=u.clone(h,!0,!0),g&&u.merge(f,qa(h,"script"))),b.call(this[j],h,j);if(g)for(i=f[f.length-1].ownerDocument,u.map(f,na),j=0;j<g;j++)h=f[j],ha.test(h.type||"")&&!H.access(h,"globalEval")&&u.contains(i,h)&&(h.src?u._evalUrl(h.src):u.globalEval(h.textContent.replace(ja,"")))}return this}}),u.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(a,b){u.fn[a]=function(a){for(var c,d=[],e=u(a),f=e.length-1,g=0;g<=f;g++)c=g===f?this:this.clone(!0),u(e[g])[b](c),o.apply(d,c.get());return this.pushStack(d)}}),u.extend({clone:function(a,b,c){var d,e,f,g,h=a.cloneNode(!0),i=u.contains(a.ownerDocument,a);if(!(u.support.noCloneChecked||1!==a.nodeType&&11!==a.nodeType||u.isXMLDoc(a)))for(g=qa(h),f=qa(a),d=0,e=f.length;d<e;d++)ra(f[d],g[d]);if(b)if(c)for(f=f||qa(a),g=g||qa(h),d=0,e=f.length;d<e;d++)pa(f[d],g[d]);else pa(a,h);return g=qa(h,"script"),g.length>0&&oa(g,!i&&qa(a,"script")),h},buildFragment:function(a,b,c,d){for(var e,f,g,h,i,j,k=0,l=a.length,m=b.createDocumentFragment(),n=[];k<l;k++)if(e=a[k],e||0===e)if("object"===u.type(e))u.merge(n,e.nodeType?[e]:e);else if(da.test(e)){for(f=f||m.appendChild(b.createElement("div")),g=(ca.exec(e)||["",""])[1].toLowerCase(),h=ka[g]||ka._default,f.innerHTML=h[1]+e.replace(ba,"<$1></$2>")+h[2],j=h[0];j--;)f=f.firstChild;u.merge(n,f.childNodes),f=m.firstChild,f.textContent=""}else n.push(b.createTextNode(e));for(m.textContent="",k=0;e=n[k++];)if((!d||u.inArray(e,d)===-1)&&(i=u.contains(e.ownerDocument,e),f=qa(m.appendChild(e),"script"),i&&oa(f),c))for(j=0;e=f[j++];)ha.test(e.type||"")&&c.push(e);return m},cleanData:function(a){for(var b,c,d,e=a.length,f=0,g=u.event.special;f<e;f++){if(c=a[f],u.acceptData(c)&&(b=H.access(c)))for(d in b.events)g[d]?u.event.remove(c,d):u.removeEvent(c,d,b.handle);G.discard(c),H.discard(c)}},_evalUrl:function(a){return u.ajax({url:a,type:"GET",dataType:"text",async:!1,global:!1,success:u.globalEval})}}),u.fn.extend({wrapAll:function(a){var b;return u.isFunction(a)?this.each(function(b){u(this).wrapAll(a.call(this,b))}):(this[0]&&(b=u(a,this[0].ownerDocument).eq(0).clone(!0),this[0].parentNode&&b.insertBefore(this[0]),b.map(function(){for(var a=this;a.firstElementChild;)a=a.firstElementChild;return a}).append(this)),this)},wrapInner:function(a){return u.isFunction(a)?this.each(function(b){u(this).wrapInner(a.call(this,b))}):this.each(function(){var b=u(this),c=b.contents();c.length?c.wrapAll(a):b.append(a)})},wrap:function(a){var b=u.isFunction(a);return this.each(function(c){u(this).wrapAll(b?a.call(this,c):a)})},unwrap:function(){return this.parent().each(function(){u.nodeName(this,"body")||u(this).replaceWith(this.childNodes)}).end()}});var sa,ta,ua=/^(none|table(?!-c[ea]).+)/,va=/^margin/,wa=new RegExp("^("+v+")(.*)$","i"),xa=new RegExp("^("+v+")(?!px)[a-z%]+$","i"),ya=new RegExp("^([+-])=("+v+")","i"),za={BODY:"block"},Aa={position:"absolute",visibility:"hidden",display:"block"},Ba={letterSpacing:0,fontWeight:400},Ca=["Top","Right","Bottom","Left"],Da=["Webkit","O","Moz","ms"];u.fn.extend({css:function(a,c){return u.access(this,function(a,c,d){var e,f,g={},h=0;if(u.isArray(c)){for(e=Ga(a),f=c.length;h<f;h++)g[c[h]]=u.css(a,c[h],!1,e);return g}return d!==b?u.style(a,c,d):u.css(a,c)},a,c,arguments.length>1)},show:function(){return Ha(this,!0)},hide:function(){return Ha(this)},toggle:function(a){var b="boolean"==typeof a;return this.each(function(){(b?a:Fa(this))?u(this).show():u(this).hide()})}}),u.extend({cssHooks:{opacity:{get:function(a,b){if(b){var c=sa(a,"opacity");return""===c?"1":c}}}},cssNumber:{columnCount:!0,fillOpacity:!0,fontWeight:!0,lineHeight:!0,opacity:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0},cssProps:{float:"cssFloat"},style:function(a,c,d,e){if(a&&3!==a.nodeType&&8!==a.nodeType&&a.style){var f,g,h,i=u.camelCase(c),j=a.style;return c=u.cssProps[i]||(u.cssProps[i]=Ea(j,i)),h=u.cssHooks[c]||u.cssHooks[i],d===b?h&&"get"in h&&(f=h.get(a,!1,e))!==b?f:j[c]:(g=typeof d,"string"===g&&(f=ya.exec(d))&&(d=(f[1]+1)*f[2]+parseFloat(u.css(a,c)),g="number"),null==d||"number"===g&&isNaN(d)||("number"!==g||u.cssNumber[i]||(d+="px"),u.support.clearCloneStyle||""!==d||0!==c.indexOf("background")||(j[c]="inherit"),h&&"set"in h&&(d=h.set(a,d,e))===b||(j[c]=d)),void 0)}},css:function(a,c,d,e){var f,g,h,i=u.camelCase(c);return c=u.cssProps[i]||(u.cssProps[i]=Ea(a.style,i)),h=u.cssHooks[c]||u.cssHooks[i],h&&"get"in h&&(f=h.get(a,!0,d)),f===b&&(f=sa(a,c,e)),"normal"===f&&c in Ba&&(f=Ba[c]),""===d||d?(g=parseFloat(f),d===!0||u.isNumeric(g)?g||0:f):f}}),sa=function(a,c,d){var e,f,g,h=d||Ga(a),i=h?h.getPropertyValue(c)||h[c]:b,j=a.style;return h&&(""!==i||u.contains(a.ownerDocument,a)||(i=u.style(a,c)),xa.test(i)&&va.test(c)&&(e=j.width,f=j.minWidth,g=j.maxWidth,j.minWidth=j.maxWidth=j.width=i,i=h.width,j.width=e,j.minWidth=f,j.maxWidth=g)),i},u.each(["height","width"],function(a,b){u.cssHooks[b]={get:function(a,c,d){if(c)return 0===a.offsetWidth&&ua.test(u.css(a,"display"))?u.swap(a,Aa,function(){return Ka(a,b,d)}):Ka(a,b,d)},set:function(a,c,d){var e=d&&Ga(a);return Ia(a,c,d?Ja(a,b,d,u.support.boxSizing&&"border-box"===u.css(a,"boxSizing",!1,e),e):0)}}}),u(function(){u.support.reliableMarginRight||(u.cssHooks.marginRight={get:function(a,b){if(b)return u.swap(a,{display:"inline-block"},sa,[a,"marginRight"])}}),!u.support.pixelPosition&&u.fn.position&&u.each(["top","left"],function(a,b){u.cssHooks[b]={get:function(a,c){if(c)return c=sa(a,b),xa.test(c)?u(a).position()[b]+"px":c}}})}),u.expr&&u.expr.filters&&(u.expr.filters.hidden=function(a){return a.offsetWidth<=0&&a.offsetHeight<=0},u.expr.filters.visible=function(a){return!u.expr.filters.hidden(a)}),u.each({margin:"",padding:"",border:"Width"},function(a,b){u.cssHooks[a+b]={expand:function(c){for(var d=0,e={},f="string"==typeof c?c.split(" "):[c];d<4;d++)e[a+Ca[d]+b]=f[d]||f[d-2]||f[0];return e}},va.test(a)||(u.cssHooks[a+b].set=Ia)});var Na=/%20/g,Oa=/\[\]$/,Pa=/\r?\n/g,Qa=/^(?:submit|button|image|reset|file)$/i,Ra=/^(?:input|select|textarea|keygen)/i;u.fn.extend({serialize:function(){return u.param(this.serializeArray())},serializeArray:function(){return this.map(function(){var a=u.prop(this,"elements");return a?u.makeArray(a):this}).filter(function(){var a=this.type;return this.name&&!u(this).is(":disabled")&&Ra.test(this.nodeName)&&!Qa.test(a)&&(this.checked||!fa.test(a))}).map(function(a,b){var c=u(this).val();return null==c?null:u.isArray(c)?u.map(c,function(a){return{name:b.name,value:a.replace(Pa,"\r\n")}}):{name:b.name,value:c.replace(Pa,"\r\n")}}).get()}}),u.param=function(a,c){var d,e=[],f=function(a,b){b=u.isFunction(b)?b():null==b?"":b,e[e.length]=encodeURIComponent(a)+"="+encodeURIComponent(b)};if(c===b&&(c=u.ajaxSettings&&u.ajaxSettings.traditional),u.isArray(a)||a.jquery&&!u.isPlainObject(a))u.each(a,function(){f(this.name,this.value)});else for(d in a)Sa(d,a[d],c,f);return e.join("&").replace(Na,"+")},u.each("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" "),function(a,b){u.fn[b]=function(a,c){return arguments.length>0?this.on(b,null,a,c):this.trigger(b)}}),u.fn.extend({hover:function(a,b){return this.mouseenter(a).mouseleave(b||a)},bind:function(a,b,c){return this.on(a,null,b,c)},unbind:function(a,b){return this.off(a,null,b)},delegate:function(a,b,c,d){return this.on(b,a,c,d)},undelegate:function(a,b,c){return 1===arguments.length?this.off(a,"**"):this.off(b,a||"**",c)}});var Ta,Ua,Va=u.now(),Wa=/\?/,Xa=/#.*$/,Ya=/([?&])_=[^&]*/,Za=/^(.*?):[ \t]*([^\r\n]*)$/gm,$a=/^(?:about|app|app-storage|.+-extension|file|res|widget):$/,_a=/^(?:GET|HEAD)$/,ab=/^\/\//,bb=/^([\w.+-]+:)(?:\/\/([^\/?#:]*)(?::(\d+)|)|)/,cb=u.fn.load,db={},eb={},fb="*/".concat("*");try{Ua=f.href}catch(a){Ua=g.createElement("a"),Ua.href="",Ua=Ua.href}Ta=bb.exec(Ua.toLowerCase())||[],u.fn.load=function(a,c,d){if("string"!=typeof a&&cb)return cb.apply(this,arguments);var e,f,g,h=this,i=a.indexOf(" ");return i>=0&&(e=a.slice(i),a=a.slice(0,i)),u.isFunction(c)?(d=c,c=b):c&&"object"==typeof c&&(f="POST"),h.length>0&&u.ajax({url:a,type:f,dataType:"html",data:c}).done(function(a){g=arguments,h.html(e?u("<div>").append(u.parseHTML(a)).find(e):a)}).complete(d&&function(a,b){h.each(d,g||[a.responseText,b,a])}),this},u.each(["ajaxStart","ajaxStop","ajaxComplete","ajaxError","ajaxSuccess","ajaxSend"],function(a,b){u.fn[b]=function(a){return this.on(b,a)}}),u.extend({active:0,lastModified:{},etag:{},ajaxSettings:{url:Ua,type:"GET",isLocal:$a.test(Ta[1]),global:!0,processData:!0,async:!0,contentType:"application/x-www-form-urlencoded; charset=UTF-8",accepts:{"*":fb,text:"text/plain",html:"text/html",xml:"application/xml, text/xml",json:"application/json, text/javascript"},contents:{xml:/xml/,html:/html/,json:/json/},responseFields:{xml:"responseXML",text:"responseText",json:"responseJSON"},converters:{"* text":String,"text html":!0,"text json":u.parseJSON,"text xml":u.parseXML},flatOptions:{url:!0,context:!0}},ajaxSetup:function(a,b){return b?ib(ib(a,u.ajaxSettings),b):ib(u.ajaxSettings,a)},ajaxPrefilter:gb(db),ajaxTransport:gb(eb),ajax:function(a,c){function y(a,c,g,i){var k,r,s,v,w,y=c;2!==t&&(t=2,h&&clearTimeout(h),d=b,f=i||"",x.readyState=a>0?4:0,k=a>=200&&a<300||304===a,g&&(v=jb(l,x,g)),v=kb(l,v,x,k),k?(l.ifModified&&(w=x.getResponseHeader("Last-Modified"),w&&(u.lastModified[e]=w),w=x.getResponseHeader("etag"),w&&(u.etag[e]=w)),204===a?y="nocontent":304===a?y="notmodified":(y=v.state,r=v.data,s=v.error,k=!s)):(s=y,!a&&y||(y="error",a<0&&(a=0))),x.status=a,x.statusText=(c||y)+"",k?o.resolveWith(m,[r,y,x]):o.rejectWith(m,[x,y,s]),x.statusCode(q),q=b,j&&n.trigger(k?"ajaxSuccess":"ajaxError",[x,l,k?r:s]),p.fireWith(m,[x,y]),j&&(n.trigger("ajaxComplete",[x,l]),--u.active||u.event.trigger("ajaxStop")))}"object"==typeof a&&(c=a,a=b),c=c||{};var d,e,f,g,h,i,j,k,l=u.ajaxSetup({},c),m=l.context||l,n=l.context&&(m.nodeType||m.jquery)?u(m):u.event,o=u.Deferred(),p=u.Callbacks("once memory"),q=l.statusCode||{},r={},s={},t=0,v="canceled",x={readyState:0,getResponseHeader:function(a){var b;if(2===t){if(!g)for(g={};b=Za.exec(f);)g[b[1].toLowerCase()]=b[2];b=g[a.toLowerCase()]}return null==b?null:b},getAllResponseHeaders:function(){return 2===t?f:null},setRequestHeader:function(a,b){var c=a.toLowerCase();return t||(a=s[c]=s[c]||a,r[a]=b),this},overrideMimeType:function(a){return t||(l.mimeType=a),this},statusCode:function(a){var b;if(a)if(t<2)for(b in a)q[b]=[q[b],a[b]];else x.always(a[x.status]);return this},abort:function(a){var b=a||v;return d&&d.abort(b),y(0,b),this}};if(o.promise(x).complete=p.add,x.success=x.done,x.error=x.fail,l.url=((a||l.url||Ua)+"").replace(Xa,"").replace(ab,Ta[1]+"//"),l.type=c.method||c.type||l.method||l.type,l.dataTypes=u.trim(l.dataType||"*").toLowerCase().match(w)||[""],null==l.crossDomain&&(i=bb.exec(l.url.toLowerCase()),l.crossDomain=!(!i||i[1]===Ta[1]&&i[2]===Ta[2]&&(i[3]||("http:"===i[1]?"80":"443"))===(Ta[3]||("http:"===Ta[1]?"80":"443")))),l.data&&l.processData&&"string"!=typeof l.data&&(l.data=u.param(l.data,l.traditional)),hb(db,l,c,x),2===t)return x;j=l.global,j&&0===u.active++&&u.event.trigger("ajaxStart"),l.type=l.type.toUpperCase(),l.hasContent=!_a.test(l.type),e=l.url,l.hasContent||(l.data&&(e=l.url+=(Wa.test(e)?"&":"?")+l.data,delete l.data),l.cache===!1&&(l.url=Ya.test(e)?e.replace(Ya,"$1_="+Va++):e+(Wa.test(e)?"&":"?")+"_="+Va++)),l.ifModified&&(u.lastModified[e]&&x.setRequestHeader("If-Modified-Since",u.lastModified[e]),u.etag[e]&&x.setRequestHeader("If-None-Match",u.etag[e])),(l.data&&l.hasContent&&l.contentType!==!1||c.contentType)&&x.setRequestHeader("Content-Type",l.contentType),x.setRequestHeader("Accept",l.dataTypes[0]&&l.accepts[l.dataTypes[0]]?l.accepts[l.dataTypes[0]]+("*"!==l.dataTypes[0]?", "+fb+"; q=0.01":""):l.accepts["*"]);for(k in l.headers)x.setRequestHeader(k,l.headers[k]);if(l.beforeSend&&(l.beforeSend.call(m,x,l)===!1||2===t))return x.abort();v="abort";for(k in{success:1,error:1,complete:1})x[k](l[k]);if(d=hb(eb,l,c,x)){x.readyState=1,j&&n.trigger("ajaxSend",[x,l]),l.async&&l.timeout>0&&(h=setTimeout(function(){x.abort("timeout")},l.timeout));try{t=1,d.send(r,y)}catch(a){if(!(t<2))throw a;y(-1,a)}}else y(-1,"No Transport");return x},getJSON:function(a,b,c){return u.get(a,b,c,"json")},getScript:function(a,c){return u.get(a,b,c,"script")}}),u.each(["get","post"],function(a,c){u[c]=function(a,d,e,f){return u.isFunction(d)&&(f=f||e,e=d,d=b),u.ajax({url:a,type:c,dataType:f,data:d,success:e})}}),u.ajaxSetup({accepts:{script:"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"},contents:{script:/(?:java|ecma)script/},converters:{"text script":function(a){return u.globalEval(a),a}}}),u.ajaxPrefilter("script",function(a){a.cache===b&&(a.cache=!1),a.crossDomain&&(a.type="GET")}),u.ajaxTransport("script",function(a){if(a.crossDomain){var b,c;return{send:function(d,e){b=u("<script>").prop({async:!0,charset:a.scriptCharset,src:a.url}).on("load error",c=function(a){b.remove(),c=null,a&&e("error"===a.type?404:200,a.type)}),g.head.appendChild(b[0])},abort:function(){c&&c()}}}});var lb=[],mb=/(=)\?(?=&|$)|\?\?/;u.ajaxSetup({jsonp:"callback",jsonpCallback:function(){var a=lb.pop()||u.expando+"_"+Va++;return this[a]=!0,a}}),u.ajaxPrefilter("json jsonp",function(c,d,e){var f,g,h,i=c.jsonp!==!1&&(mb.test(c.url)?"url":"string"==typeof c.data&&!(c.contentType||"").indexOf("application/x-www-form-urlencoded")&&mb.test(c.data)&&"data");if(i||"jsonp"===c.dataTypes[0])return f=c.jsonpCallback=u.isFunction(c.jsonpCallback)?c.jsonpCallback():c.jsonpCallback,i?c[i]=c[i].replace(mb,"$1"+f):c.jsonp!==!1&&(c.url+=(Wa.test(c.url)?"&":"?")+c.jsonp+"="+f),c.converters["script json"]=function(){return h||u.error(f+" was not called"),h[0]},c.dataTypes[0]="json",g=a[f],a[f]=function(){h=arguments},e.always(function(){a[f]=g,c[f]&&(c.jsonpCallback=d.jsonpCallback,lb.push(f)),h&&u.isFunction(g)&&g(h[0]),h=g=b}),"script"}),u.ajaxSettings.xhr=function(){try{return new XMLHttpRequest}catch(a){}};var nb=u.ajaxSettings.xhr(),ob={0:200,1223:204},pb=0,qb={};a.ActiveXObject&&u(a).on("unload",function(){for(var a in qb)qb[a]();qb=b}),u.support.cors=!!nb&&"withCredentials"in nb,u.support.ajax=nb=!!nb,u.ajaxTransport(function(a){var c;if(u.support.cors||nb&&!a.crossDomain)return{send:function(d,e){var f,g,h=a.xhr();if(h.open(a.type,a.url,a.async,a.username,a.password),a.xhrFields)for(f in a.xhrFields)h[f]=a.xhrFields[f];a.mimeType&&h.overrideMimeType&&h.overrideMimeType(a.mimeType),a.crossDomain||d["X-Requested-With"]||(d["X-Requested-With"]="XMLHttpRequest");for(f in d)h.setRequestHeader(f,d[f]);c=function(a){return function(){c&&(delete qb[g],c=h.onload=h.onerror=null,"abort"===a?h.abort():"error"===a?e(h.status||404,h.statusText):e(ob[h.status]||h.status,h.statusText,"string"==typeof h.responseText?{text:h.responseText}:b,h.getAllResponseHeaders()))}},h.onload=c(),h.onerror=c("error"),c=qb[g=pb++]=c("abort"),h.send(a.hasContent&&a.data||null)},abort:function(){c&&c()}}});var rb,sb,tb=/^(?:toggle|show|hide)$/,ub=new RegExp("^(?:([+-])=|)("+v+")([a-z%]*)$","i"),vb=/queueHooks$/,wb=[Cb],xb={"*":[function(a,b){var c,d,e=this.createTween(a,b),f=ub.exec(b),g=e.cur(),h=+g||0,i=1,j=20;if(f){if(c=+f[2],d=f[3]||(u.cssNumber[a]?"":"px"),"px"!==d&&h){h=u.css(e.elem,a,!0)||c||1;do i=i||".5",h/=i,u.style(e.elem,a,h+d);while(i!==(i=e.cur()/g)&&1!==i&&--j)}e.unit=d,e.start=h,e.end=f[1]?h+(f[1]+1)*c:c}return e}]};u.Animation=u.extend(Ab,{tweener:function(a,b){u.isFunction(a)?(b=a,a=["*"]):a=a.split(" ");for(var c,d=0,e=a.length;d<e;d++)c=a[d],xb[c]=xb[c]||[],xb[c].unshift(b)},prefilter:function(a,b){b?wb.unshift(a):wb.push(a)}}),u.Tween=Db,Db.prototype={constructor:Db,init:function(a,b,c,d,e,f){this.elem=a,this.prop=c,this.easing=e||"swing",this.options=b,this.start=this.now=this.cur(),this.end=d,this.unit=f||(u.cssNumber[c]?"":"px")},cur:function(){var a=Db.propHooks[this.prop];return a&&a.get?a.get(this):Db.propHooks._default.get(this)},run:function(a){var b,c=Db.propHooks[this.prop];return this.options.duration?this.pos=b=u.easing[this.easing](a,this.options.duration*a,0,1,this.options.duration):this.pos=b=a,this.now=(this.end-this.start)*b+this.start,this.options.step&&this.options.step.call(this.elem,this.now,this),c&&c.set?c.set(this):Db.propHooks._default.set(this),this}},Db.prototype.init.prototype=Db.prototype,Db.propHooks={_default:{get:function(a){var b;return null==a.elem[a.prop]||a.elem.style&&null!=a.elem.style[a.prop]?(b=u.css(a.elem,a.prop,""),b&&"auto"!==b?b:0):a.elem[a.prop]},set:function(a){u.fx.step[a.prop]?u.fx.step[a.prop](a):a.elem.style&&(null!=a.elem.style[u.cssProps[a.prop]]||u.cssHooks[a.prop])?u.style(a.elem,a.prop,a.now+a.unit):a.elem[a.prop]=a.now}}},Db.propHooks.scrollTop=Db.propHooks.scrollLeft={set:function(a){a.elem.nodeType&&a.elem.parentNode&&(a.elem[a.prop]=a.now)}},u.each(["toggle","show","hide"],function(a,b){var c=u.fn[b];u.fn[b]=function(a,d,e){return null==a||"boolean"==typeof a?c.apply(this,arguments):this.animate(Eb(b,!0),a,d,e)}}),u.fn.extend({fadeTo:function(a,b,c,d){return this.filter(Fa).css("opacity",0).show().end().animate({opacity:b},a,c,d)},animate:function(a,b,c,d){var e=u.isEmptyObject(a),f=u.speed(b,c,d),g=function(){var b=Ab(this,u.extend({},a),f);g.finish=function(){b.stop(!0)},(e||H.get(this,"finish"))&&b.stop(!0)};return g.finish=g,e||f.queue===!1?this.each(g):this.queue(f.queue,g)},stop:function(a,c,d){var e=function(a){var b=a.stop;delete a.stop,b(d)};return"string"!=typeof a&&(d=c,c=a,a=b),c&&a!==!1&&this.queue(a||"fx",[]),this.each(function(){var b=!0,c=null!=a&&a+"queueHooks",f=u.timers,g=H.get(this);if(c)g[c]&&g[c].stop&&e(g[c]);else for(c in g)g[c]&&g[c].stop&&vb.test(c)&&e(g[c]);for(c=f.length;c--;)f[c].elem!==this||null!=a&&f[c].queue!==a||(f[c].anim.stop(d),b=!1,f.splice(c,1));!b&&d||u.dequeue(this,a)})},finish:function(a){return a!==!1&&(a=a||"fx"),this.each(function(){var b,c=H.get(this),d=c[a+"queue"],e=c[a+"queueHooks"],f=u.timers,g=d?d.length:0;for(c.finish=!0,u.queue(this,a,[]),e&&e.cur&&e.cur.finish&&e.cur.finish.call(this),b=f.length;b--;)f[b].elem===this&&f[b].queue===a&&(f[b].anim.stop(!0),f.splice(b,1));for(b=0;b<g;b++)d[b]&&d[b].finish&&d[b].finish.call(this);delete c.finish})}}),u.each({slideDown:Eb("show"),slideUp:Eb("hide"),slideToggle:Eb("toggle"),fadeIn:{opacity:"show"},fadeOut:{opacity:"hide"},fadeToggle:{opacity:"toggle"}},function(a,b){u.fn[a]=function(a,c,d){return this.animate(b,a,c,d)}}),u.speed=function(a,b,c){var d=a&&"object"==typeof a?u.extend({},a):{complete:c||!c&&b||u.isFunction(a)&&a,duration:a,easing:c&&b||b&&!u.isFunction(b)&&b};return d.duration=u.fx.off?0:"number"==typeof d.duration?d.duration:d.duration in u.fx.speeds?u.fx.speeds[d.duration]:u.fx.speeds._default,null!=d.queue&&d.queue!==!0||(d.queue="fx"),d.old=d.complete,d.complete=function(){u.isFunction(d.old)&&d.old.call(this),d.queue&&u.dequeue(this,d.queue)},d},u.easing={linear:function(a){return a},swing:function(a){return.5-Math.cos(a*Math.PI)/2}},u.timers=[],u.fx=Db.prototype.init,u.fx.tick=function(){var a,c=u.timers,d=0;for(rb=u.now();d<c.length;d++)a=c[d],a()||c[d]!==a||c.splice(d--,1);c.length||u.fx.stop(),rb=b},u.fx.timer=function(a){a()&&u.timers.push(a)&&u.fx.start()},u.fx.interval=13,u.fx.start=function(){sb||(sb=setInterval(u.fx.tick,u.fx.interval))},u.fx.stop=function(){clearInterval(sb),sb=null},u.fx.speeds={slow:600,fast:200,_default:400},u.fx.step={},u.expr&&u.expr.filters&&(u.expr.filters.animated=function(a){return u.grep(u.timers,function(b){return a===b.elem}).length}),u.fn.offset=function(a){if(arguments.length)return a===b?this:this.each(function(b){u.offset.setOffset(this,a,b)});var c,d,f=this[0],g={top:0,left:0},h=f&&f.ownerDocument;if(h)return c=h.documentElement,u.contains(c,f)?(typeof f.getBoundingClientRect!==e&&(g=f.getBoundingClientRect()),
-d=Fb(h),{top:g.top+d.pageYOffset-c.clientTop,left:g.left+d.pageXOffset-c.clientLeft}):g},u.offset={setOffset:function(a,b,c){var d,e,f,g,h,i,j,k=u.css(a,"position"),l=u(a),m={};"static"===k&&(a.style.position="relative"),h=l.offset(),f=u.css(a,"top"),i=u.css(a,"left"),j=("absolute"===k||"fixed"===k)&&(f+i).indexOf("auto")>-1,j?(d=l.position(),g=d.top,e=d.left):(g=parseFloat(f)||0,e=parseFloat(i)||0),u.isFunction(b)&&(b=b.call(a,c,h)),null!=b.top&&(m.top=b.top-h.top+g),null!=b.left&&(m.left=b.left-h.left+e),"using"in b?b.using.call(a,m):l.css(m)}},u.fn.extend({position:function(){if(this[0]){var a,b,c=this[0],d={top:0,left:0};return"fixed"===u.css(c,"position")?b=c.getBoundingClientRect():(a=this.offsetParent(),b=this.offset(),u.nodeName(a[0],"html")||(d=a.offset()),d.top+=u.css(a[0],"borderTopWidth",!0),d.left+=u.css(a[0],"borderLeftWidth",!0)),{top:b.top-d.top-u.css(c,"marginTop",!0),left:b.left-d.left-u.css(c,"marginLeft",!0)}}},offsetParent:function(){return this.map(function(){for(var a=this.offsetParent||h;a&&!u.nodeName(a,"html")&&"static"===u.css(a,"position");)a=a.offsetParent;return a||h})}}),u.each({scrollLeft:"pageXOffset",scrollTop:"pageYOffset"},function(c,d){var e="pageYOffset"===d;u.fn[c]=function(f){return u.access(this,function(c,f,g){var h=Fb(c);return g===b?h?h[d]:c[f]:void(h?h.scrollTo(e?a.pageXOffset:g,e?g:a.pageYOffset):c[f]=g)},c,f,arguments.length,null)}}),u.each({Height:"height",Width:"width"},function(a,c){u.each({padding:"inner"+a,content:c,"":"outer"+a},function(d,e){u.fn[e]=function(e,f){var g=arguments.length&&(d||"boolean"!=typeof e),h=d||(e===!0||f===!0?"margin":"border");return u.access(this,function(c,d,e){var f;return u.isWindow(c)?c.document.documentElement["client"+a]:9===c.nodeType?(f=c.documentElement,Math.max(c.body["scroll"+a],f["scroll"+a],c.body["offset"+a],f["offset"+a],f["client"+a])):e===b?u.css(c,d,h):u.style(c,d,e,h)},c,g?e:b,g,null)}})}),u.fn.size=function(){return this.length},u.fn.andSelf=u.fn.addBack,"object"==typeof module&&"object"==typeof module.exports?module.exports=u:"function"==typeof define&&define.amd&&define("jquery",[],function(){return u}),"object"==typeof a&&"object"==typeof a.document&&(a.jQuery=a.$=u)}(window);
+//Not using strict: uneven strict support in browsers, #392, and causes
+//problems with requirejs.exec()/transpiler plugins that may not be strict.
+/*jslint regexp: true, nomen: true, sloppy: true */
+/*global window, navigator, document, importScripts, setTimeout, opera */
+
+var requirejs, require, define;
+(function (global) {
+    var req, s, head, baseElement, dataMain, src,
+        interactiveScript, currentlyAddingScript, mainScript, subPath,
+        version = '2.1.5',
+        commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
+        cjsRequireRegExp = /[^.]\s*require\s*\(\s*["']([^'"\s]+)["']\s*\)/g,
+        jsSuffixRegExp = /\.js$/,
+        currDirRegExp = /^\.\//,
+        op = Object.prototype,
+        ostring = op.toString,
+        hasOwn = op.hasOwnProperty,
+        ap = Array.prototype,
+        apsp = ap.splice,
+        isBrowser = !!(typeof window !== 'undefined' && navigator && document),
+        isWebWorker = !isBrowser && typeof importScripts !== 'undefined',
+        //PS3 indicates loaded and complete, but need to wait for complete
+        //specifically. Sequence is 'loading', 'loaded', execution,
+        // then 'complete'. The UA check is unfortunate, but not sure how
+        //to feature test w/o causing perf issues.
+        readyRegExp = isBrowser && navigator.platform === 'PLAYSTATION 3' ?
+                      /^complete$/ : /^(complete|loaded)$/,
+        defContextName = '_',
+        //Oh the tragedy, detecting opera. See the usage of isOpera for reason.
+        isOpera = typeof opera !== 'undefined' && opera.toString() === '[object Opera]',
+        contexts = {},
+        cfg = {},
+        globalDefQueue = [],
+        useInteractive = false;
+
+    function isFunction(it) {
+        return ostring.call(it) === '[object Function]';
+    }
+
+    function isArray(it) {
+        return ostring.call(it) === '[object Array]';
+    }
+
+    /**
+     * Helper function for iterating over an array. If the func returns
+     * a true value, it will break out of the loop.
+     */
+    function each(ary, func) {
+        if (ary) {
+            var i;
+            for (i = 0; i < ary.length; i += 1) {
+                if (ary[i] && func(ary[i], i, ary)) {
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Helper function for iterating over an array backwards. If the func
+     * returns a true value, it will break out of the loop.
+     */
+    function eachReverse(ary, func) {
+        if (ary) {
+            var i;
+            for (i = ary.length - 1; i > -1; i -= 1) {
+                if (ary[i] && func(ary[i], i, ary)) {
+                    break;
+                }
+            }
+        }
+    }
+
+    function hasProp(obj, prop) {
+        return hasOwn.call(obj, prop);
+    }
+
+    function getOwn(obj, prop) {
+        return hasProp(obj, prop) && obj[prop];
+    }
+
+    /**
+     * Cycles over properties in an object and calls a function for each
+     * property value. If the function returns a truthy value, then the
+     * iteration is stopped.
+     */
+    function eachProp(obj, func) {
+        var prop;
+        for (prop in obj) {
+            if (hasProp(obj, prop)) {
+                if (func(obj[prop], prop)) {
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Simple function to mix in properties from source into target,
+     * but only if target does not already have a property of the same name.
+     */
+    function mixin(target, source, force, deepStringMixin) {
+        if (source) {
+            eachProp(source, function (value, prop) {
+                if (force || !hasProp(target, prop)) {
+                    if (deepStringMixin && typeof value !== 'string') {
+                        if (!target[prop]) {
+                            target[prop] = {};
+                        }
+                        mixin(target[prop], value, force, deepStringMixin);
+                    } else {
+                        target[prop] = value;
+                    }
+                }
+            });
+        }
+        return target;
+    }
+
+    //Similar to Function.prototype.bind, but the 'this' object is specified
+    //first, since it is easier to read/figure out what 'this' will be.
+    function bind(obj, fn) {
+        return function () {
+            return fn.apply(obj, arguments);
+        };
+    }
+
+    function scripts() {
+        return document.getElementsByTagName('script');
+    }
+
+    //Allow getting a global that expressed in
+    //dot notation, like 'a.b.c'.
+    function getGlobal(value) {
+        if (!value) {
+            return value;
+        }
+        var g = global;
+        each(value.split('.'), function (part) {
+            g = g[part];
+        });
+        return g;
+    }
+
+    /**
+     * Constructs an error with a pointer to an URL with more information.
+     * @param {String} id the error ID that maps to an ID on a web page.
+     * @param {String} message human readable error.
+     * @param {Error} [err] the original error, if there is one.
+     *
+     * @returns {Error}
+     */
+    function makeError(id, msg, err, requireModules) {
+        var e = new Error(msg + '\nhttp://requirejs.org/docs/errors.html#' + id);
+        e.requireType = id;
+        e.requireModules = requireModules;
+        if (err) {
+            e.originalError = err;
+        }
+        return e;
+    }
+
+    if (typeof define !== 'undefined') {
+        //If a define is already in play via another AMD loader,
+        //do not overwrite.
+        return;
+    }
+
+    if (typeof requirejs !== 'undefined') {
+        if (isFunction(requirejs)) {
+            //Do not overwrite and existing requirejs instance.
+            return;
+        }
+        cfg = requirejs;
+        requirejs = undefined;
+    }
+
+    //Allow for a require config object
+    if (typeof require !== 'undefined' && !isFunction(require)) {
+        //assume it is a config object.
+        cfg = require;
+        require = undefined;
+    }
+
+    function newContext(contextName) {
+        var inCheckLoaded, Module, context, handlers,
+            checkLoadedTimeoutId,
+            config = {
+                //Defaults. Do not set a default for map
+                //config to speed up normalize(), which
+                //will run faster if there is no default.
+                waitSeconds: 7,
+                baseUrl: './',
+                paths: {},
+                pkgs: {},
+                shim: {},
+                config: {}
+            },
+            registry = {},
+            //registry of just enabled modules, to speed
+            //cycle breaking code when lots of modules
+            //are registered, but not activated.
+            enabledRegistry = {},
+            undefEvents = {},
+            defQueue = [],
+            defined = {},
+            urlFetched = {},
+            requireCounter = 1,
+            unnormalizedCounter = 1;
+
+        /**
+         * Trims the . and .. from an array of path segments.
+         * It will keep a leading path segment if a .. will become
+         * the first path segment, to help with module name lookups,
+         * which act like paths, but can be remapped. But the end result,
+         * all paths that use this function should look normalized.
+         * NOTE: this method MODIFIES the input array.
+         * @param {Array} ary the array of path segments.
+         */
+        function trimDots(ary) {
+            var i, part;
+            for (i = 0; ary[i]; i += 1) {
+                part = ary[i];
+                if (part === '.') {
+                    ary.splice(i, 1);
+                    i -= 1;
+                } else if (part === '..') {
+                    if (i === 1 && (ary[2] === '..' || ary[0] === '..')) {
+                        //End of the line. Keep at least one non-dot
+                        //path segment at the front so it can be mapped
+                        //correctly to disk. Otherwise, there is likely
+                        //no path mapping for a path starting with '..'.
+                        //This can still fail, but catches the most reasonable
+                        //uses of ..
+                        break;
+                    } else if (i > 0) {
+                        ary.splice(i - 1, 2);
+                        i -= 2;
+                    }
+                }
+            }
+        }
+
+        /**
+         * Given a relative module name, like ./something, normalize it to
+         * a real name that can be mapped to a path.
+         * @param {String} name the relative name
+         * @param {String} baseName a real name that the name arg is relative
+         * to.
+         * @param {Boolean} applyMap apply the map config to the value. Should
+         * only be done if this normalization is for a dependency ID.
+         * @returns {String} normalized name
+         */
+        function normalize(name, baseName, applyMap) {
+            var pkgName, pkgConfig, mapValue, nameParts, i, j, nameSegment,
+                foundMap, foundI, foundStarMap, starI,
+                baseParts = baseName && baseName.split('/'),
+                normalizedBaseParts = baseParts,
+                map = config.map,
+                starMap = map && map['*'];
+
+            //Adjust any relative paths.
+            if (name && name.charAt(0) === '.') {
+                //If have a base name, try to normalize against it,
+                //otherwise, assume it is a top-level require that will
+                //be relative to baseUrl in the end.
+                if (baseName) {
+                    if (getOwn(config.pkgs, baseName)) {
+                        //If the baseName is a package name, then just treat it as one
+                        //name to concat the name with.
+                        normalizedBaseParts = baseParts = [baseName];
+                    } else {
+                        //Convert baseName to array, and lop off the last part,
+                        //so that . matches that 'directory' and not name of the baseName's
+                        //module. For instance, baseName of 'one/two/three', maps to
+                        //'one/two/three.js', but we want the directory, 'one/two' for
+                        //this normalization.
+                        normalizedBaseParts = baseParts.slice(0, baseParts.length - 1);
+                    }
+
+                    name = normalizedBaseParts.concat(name.split('/'));
+                    trimDots(name);
+
+                    //Some use of packages may use a . path to reference the
+                    //'main' module name, so normalize for that.
+                    pkgConfig = getOwn(config.pkgs, (pkgName = name[0]));
+                    name = name.join('/');
+                    if (pkgConfig && name === pkgName + '/' + pkgConfig.main) {
+                        name = pkgName;
+                    }
+                } else if (name.indexOf('./') === 0) {
+                    // No baseName, so this is ID is resolved relative
+                    // to baseUrl, pull off the leading dot.
+                    name = name.substring(2);
+                }
+            }
+
+            //Apply map config if available.
+            if (applyMap && map && (baseParts || starMap)) {
+                nameParts = name.split('/');
+
+                for (i = nameParts.length; i > 0; i -= 1) {
+                    nameSegment = nameParts.slice(0, i).join('/');
+
+                    if (baseParts) {
+                        //Find the longest baseName segment match in the config.
+                        //So, do joins on the biggest to smallest lengths of baseParts.
+                        for (j = baseParts.length; j > 0; j -= 1) {
+                            mapValue = getOwn(map, baseParts.slice(0, j).join('/'));
+
+                            //baseName segment has config, find if it has one for
+                            //this name.
+                            if (mapValue) {
+                                mapValue = getOwn(mapValue, nameSegment);
+                                if (mapValue) {
+                                    //Match, update name to the new value.
+                                    foundMap = mapValue;
+                                    foundI = i;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (foundMap) {
+                        break;
+                    }
+
+                    //Check for a star map match, but just hold on to it,
+                    //if there is a shorter segment match later in a matching
+                    //config, then favor over this star map.
+                    if (!foundStarMap && starMap && getOwn(starMap, nameSegment)) {
+                        foundStarMap = getOwn(starMap, nameSegment);
+                        starI = i;
+                    }
+                }
+
+                if (!foundMap && foundStarMap) {
+                    foundMap = foundStarMap;
+                    foundI = starI;
+                }
+
+                if (foundMap) {
+                    nameParts.splice(0, foundI, foundMap);
+                    name = nameParts.join('/');
+                }
+            }
+
+            return name;
+        }
+
+        function removeScript(name) {
+            if (isBrowser) {
+                each(scripts(), function (scriptNode) {
+                    if (scriptNode.getAttribute('data-requiremodule') === name &&
+                            scriptNode.getAttribute('data-requirecontext') === context.contextName) {
+                        scriptNode.parentNode.removeChild(scriptNode);
+                        return true;
+                    }
+                });
+            }
+        }
+
+        function hasPathFallback(id) {
+            var pathConfig = getOwn(config.paths, id);
+            if (pathConfig && isArray(pathConfig) && pathConfig.length > 1) {
+                removeScript(id);
+                //Pop off the first array value, since it failed, and
+                //retry
+                pathConfig.shift();
+                context.require.undef(id);
+                context.require([id]);
+                return true;
+            }
+        }
+
+        //Turns a plugin!resource to [plugin, resource]
+        //with the plugin being undefined if the name
+        //did not have a plugin prefix.
+        function splitPrefix(name) {
+            var prefix,
+                index = name ? name.indexOf('!') : -1;
+            if (index > -1) {
+                prefix = name.substring(0, index);
+                name = name.substring(index + 1, name.length);
+            }
+            return [prefix, name];
+        }
+
+        /**
+         * Creates a module mapping that includes plugin prefix, module
+         * name, and path. If parentModuleMap is provided it will
+         * also normalize the name via require.normalize()
+         *
+         * @param {String} name the module name
+         * @param {String} [parentModuleMap] parent module map
+         * for the module name, used to resolve relative names.
+         * @param {Boolean} isNormalized: is the ID already normalized.
+         * This is true if this call is done for a define() module ID.
+         * @param {Boolean} applyMap: apply the map config to the ID.
+         * Should only be true if this map is for a dependency.
+         *
+         * @returns {Object}
+         */
+        function makeModuleMap(name, parentModuleMap, isNormalized, applyMap) {
+            var url, pluginModule, suffix, nameParts,
+                prefix = null,
+                parentName = parentModuleMap ? parentModuleMap.name : null,
+                originalName = name,
+                isDefine = true,
+                normalizedName = '';
+
+            //If no name, then it means it is a require call, generate an
+            //internal name.
+            if (!name) {
+                isDefine = false;
+                name = '_@r' + (requireCounter += 1);
+            }
+
+            nameParts = splitPrefix(name);
+            prefix = nameParts[0];
+            name = nameParts[1];
+
+            if (prefix) {
+                prefix = normalize(prefix, parentName, applyMap);
+                pluginModule = getOwn(defined, prefix);
+            }
+
+            //Account for relative paths if there is a base name.
+            if (name) {
+                if (prefix) {
+                    if (pluginModule && pluginModule.normalize) {
+                        //Plugin is loaded, use its normalize method.
+                        normalizedName = pluginModule.normalize(name, function (name) {
+                            return normalize(name, parentName, applyMap);
+                        });
+                    } else {
+                        normalizedName = normalize(name, parentName, applyMap);
+                    }
+                } else {
+                    //A regular module.
+                    normalizedName = normalize(name, parentName, applyMap);
+
+                    //Normalized name may be a plugin ID due to map config
+                    //application in normalize. The map config values must
+                    //already be normalized, so do not need to redo that part.
+                    nameParts = splitPrefix(normalizedName);
+                    prefix = nameParts[0];
+                    normalizedName = nameParts[1];
+                    isNormalized = true;
+
+                    url = context.nameToUrl(normalizedName);
+                }
+            }
+
+            //If the id is a plugin id that cannot be determined if it needs
+            //normalization, stamp it with a unique ID so two matching relative
+            //ids that may conflict can be separate.
+            suffix = prefix && !pluginModule && !isNormalized ?
+                     '_unnormalized' + (unnormalizedCounter += 1) :
+                     '';
+
+            return {
+                prefix: prefix,
+                name: normalizedName,
+                parentMap: parentModuleMap,
+                unnormalized: !!suffix,
+                url: url,
+                originalName: originalName,
+                isDefine: isDefine,
+                id: (prefix ?
+                        prefix + '!' + normalizedName :
+                        normalizedName) + suffix
+            };
+        }
+
+        function getModule(depMap) {
+            var id = depMap.id,
+                mod = getOwn(registry, id);
+
+            if (!mod) {
+                mod = registry[id] = new context.Module(depMap);
+            }
+
+            return mod;
+        }
+
+        function on(depMap, name, fn) {
+            var id = depMap.id,
+                mod = getOwn(registry, id);
+
+            if (hasProp(defined, id) &&
+                    (!mod || mod.defineEmitComplete)) {
+                if (name === 'defined') {
+                    fn(defined[id]);
+                }
+            } else {
+                getModule(depMap).on(name, fn);
+            }
+        }
+
+        function onError(err, errback) {
+            var ids = err.requireModules,
+                notified = false;
+
+            if (errback) {
+                errback(err);
+            } else {
+                each(ids, function (id) {
+                    var mod = getOwn(registry, id);
+                    if (mod) {
+                        //Set error on module, so it skips timeout checks.
+                        mod.error = err;
+                        if (mod.events.error) {
+                            notified = true;
+                            mod.emit('error', err);
+                        }
+                    }
+                });
+
+                if (!notified) {
+                    req.onError(err);
+                }
+            }
+        }
+
+        /**
+         * Internal method to transfer globalQueue items to this context's
+         * defQueue.
+         */
+        function takeGlobalQueue() {
+            //Push all the globalDefQueue items into the context's defQueue
+            if (globalDefQueue.length) {
+                //Array splice in the values since the context code has a
+                //local var ref to defQueue, so cannot just reassign the one
+                //on context.
+                apsp.apply(defQueue,
+                           [defQueue.length - 1, 0].concat(globalDefQueue));
+                globalDefQueue = [];
+            }
+        }
+
+        handlers = {
+            'require': function (mod) {
+                if (mod.require) {
+                    return mod.require;
+                } else {
+                    return (mod.require = context.makeRequire(mod.map));
+                }
+            },
+            'exports': function (mod) {
+                mod.usingExports = true;
+                if (mod.map.isDefine) {
+                    if (mod.exports) {
+                        return mod.exports;
+                    } else {
+                        return (mod.exports = defined[mod.map.id] = {});
+                    }
+                }
+            },
+            'module': function (mod) {
+                if (mod.module) {
+                    return mod.module;
+                } else {
+                    return (mod.module = {
+                        id: mod.map.id,
+                        uri: mod.map.url,
+                        config: function () {
+                            return (config.config && getOwn(config.config, mod.map.id)) || {};
+                        },
+                        exports: defined[mod.map.id]
+                    });
+                }
+            }
+        };
+
+        function cleanRegistry(id) {
+            //Clean up machinery used for waiting modules.
+            delete registry[id];
+            delete enabledRegistry[id];
+        }
+
+        function breakCycle(mod, traced, processed) {
+            var id = mod.map.id;
+
+            if (mod.error) {
+                mod.emit('error', mod.error);
+            } else {
+                traced[id] = true;
+                each(mod.depMaps, function (depMap, i) {
+                    var depId = depMap.id,
+                        dep = getOwn(registry, depId);
+
+                    //Only force things that have not completed
+                    //being defined, so still in the registry,
+                    //and only if it has not been matched up
+                    //in the module already.
+                    if (dep && !mod.depMatched[i] && !processed[depId]) {
+                        if (getOwn(traced, depId)) {
+                            mod.defineDep(i, defined[depId]);
+                            mod.check(); //pass false?
+                        } else {
+                            breakCycle(dep, traced, processed);
+                        }
+                    }
+                });
+                processed[id] = true;
+            }
+        }
+
+        function checkLoaded() {
+            var map, modId, err, usingPathFallback,
+                waitInterval = config.waitSeconds * 1000,
+                //It is possible to disable the wait interval by using waitSeconds of 0.
+                expired = waitInterval && (context.startTime + waitInterval) < new Date().getTime(),
+                noLoads = [],
+                reqCalls = [],
+                stillLoading = false,
+                needCycleCheck = true;
+
+            //Do not bother if this call was a result of a cycle break.
+            if (inCheckLoaded) {
+                return;
+            }
+
+            inCheckLoaded = true;
+
+            //Figure out the state of all the modules.
+            eachProp(enabledRegistry, function (mod) {
+                map = mod.map;
+                modId = map.id;
+
+                //Skip things that are not enabled or in error state.
+                if (!mod.enabled) {
+                    return;
+                }
+
+                if (!map.isDefine) {
+                    reqCalls.push(mod);
+                }
+
+                if (!mod.error) {
+                    //If the module should be executed, and it has not
+                    //been inited and time is up, remember it.
+                    if (!mod.inited && expired) {
+                        if (hasPathFallback(modId)) {
+                            usingPathFallback = true;
+                            stillLoading = true;
+                        } else {
+                            noLoads.push(modId);
+                            removeScript(modId);
+                        }
+                    } else if (!mod.inited && mod.fetched && map.isDefine) {
+                        stillLoading = true;
+                        if (!map.prefix) {
+                            //No reason to keep looking for unfinished
+                            //loading. If the only stillLoading is a
+                            //plugin resource though, keep going,
+                            //because it may be that a plugin resource
+                            //is waiting on a non-plugin cycle.
+                            return (needCycleCheck = false);
+                        }
+                    }
+                }
+            });
+
+            if (expired && noLoads.length) {
+                //If wait time expired, throw error of unloaded modules.
+                err = makeError('timeout', 'Load timeout for modules: ' + noLoads, null, noLoads);
+                err.contextName = context.contextName;
+                return onError(err);
+            }
+
+            //Not expired, check for a cycle.
+            if (needCycleCheck) {
+                each(reqCalls, function (mod) {
+                    breakCycle(mod, {}, {});
+                });
+            }
+
+            //If still waiting on loads, and the waiting load is something
+            //other than a plugin resource, or there are still outstanding
+            //scripts, then just try back later.
+            if ((!expired || usingPathFallback) && stillLoading) {
+                //Something is still waiting to load. Wait for it, but only
+                //if a timeout is not already in effect.
+                if ((isBrowser || isWebWorker) && !checkLoadedTimeoutId) {
+                    checkLoadedTimeoutId = setTimeout(function () {
+                        checkLoadedTimeoutId = 0;
+                        checkLoaded();
+                    }, 50);
+                }
+            }
+
+            inCheckLoaded = false;
+        }
+
+        Module = function (map) {
+            this.events = getOwn(undefEvents, map.id) || {};
+            this.map = map;
+            this.shim = getOwn(config.shim, map.id);
+            this.depExports = [];
+            this.depMaps = [];
+            this.depMatched = [];
+            this.pluginMaps = {};
+            this.depCount = 0;
+
+            /* this.exports this.factory
+               this.depMaps = [],
+               this.enabled, this.fetched
+            */
+        };
+
+        Module.prototype = {
+            init: function (depMaps, factory, errback, options) {
+                options = options || {};
+
+                //Do not do more inits if already done. Can happen if there
+                //are multiple define calls for the same module. That is not
+                //a normal, common case, but it is also not unexpected.
+                if (this.inited) {
+                    return;
+                }
+
+                this.factory = factory;
+
+                if (errback) {
+                    //Register for errors on this module.
+                    this.on('error', errback);
+                } else if (this.events.error) {
+                    //If no errback already, but there are error listeners
+                    //on this module, set up an errback to pass to the deps.
+                    errback = bind(this, function (err) {
+                        this.emit('error', err);
+                    });
+                }
+
+                //Do a copy of the dependency array, so that
+                //source inputs are not modified. For example
+                //"shim" deps are passed in here directly, and
+                //doing a direct modification of the depMaps array
+                //would affect that config.
+                this.depMaps = depMaps && depMaps.slice(0);
+
+                this.errback = errback;
+
+                //Indicate this module has be initialized
+                this.inited = true;
+
+                this.ignore = options.ignore;
+
+                //Could have option to init this module in enabled mode,
+                //or could have been previously marked as enabled. However,
+                //the dependencies are not known until init is called. So
+                //if enabled previously, now trigger dependencies as enabled.
+                if (options.enabled || this.enabled) {
+                    //Enable this module and dependencies.
+                    //Will call this.check()
+                    this.enable();
+                } else {
+                    this.check();
+                }
+            },
+
+            defineDep: function (i, depExports) {
+                //Because of cycles, defined callback for a given
+                //export can be called more than once.
+                if (!this.depMatched[i]) {
+                    this.depMatched[i] = true;
+                    this.depCount -= 1;
+                    this.depExports[i] = depExports;
+                }
+            },
+
+            fetch: function () {
+                if (this.fetched) {
+                    return;
+                }
+                this.fetched = true;
+
+                context.startTime = (new Date()).getTime();
+
+                var map = this.map;
+
+                //If the manager is for a plugin managed resource,
+                //ask the plugin to load it now.
+                if (this.shim) {
+                    context.makeRequire(this.map, {
+                        enableBuildCallback: true
+                    })(this.shim.deps || [], bind(this, function () {
+                        return map.prefix ? this.callPlugin() : this.load();
+                    }));
+                } else {
+                    //Regular dependency.
+                    return map.prefix ? this.callPlugin() : this.load();
+                }
+            },
+
+            load: function () {
+                var url = this.map.url;
+
+                //Regular dependency.
+                if (!urlFetched[url]) {
+                    urlFetched[url] = true;
+                    context.load(this.map.id, url);
+                }
+            },
+
+            /**
+             * Checks if the module is ready to define itself, and if so,
+             * define it.
+             */
+            check: function () {
+                if (!this.enabled || this.enabling) {
+                    return;
+                }
+
+                var err, cjsModule,
+                    id = this.map.id,
+                    depExports = this.depExports,
+                    exports = this.exports,
+                    factory = this.factory;
+
+                if (!this.inited) {
+                    this.fetch();
+                } else if (this.error) {
+                    this.emit('error', this.error);
+                } else if (!this.defining) {
+                    //The factory could trigger another require call
+                    //that would result in checking this module to
+                    //define itself again. If already in the process
+                    //of doing that, skip this work.
+                    this.defining = true;
+
+                    if (this.depCount < 1 && !this.defined) {
+                        if (isFunction(factory)) {
+                            //If there is an error listener, favor passing
+                            //to that instead of throwing an error.
+                            if (this.events.error) {
+                                try {
+                                    exports = context.execCb(id, factory, depExports, exports);
+                                } catch (e) {
+                                    err = e;
+                                }
+                            } else {
+                                exports = context.execCb(id, factory, depExports, exports);
+                            }
+
+                            if (this.map.isDefine) {
+                                //If setting exports via 'module' is in play,
+                                //favor that over return value and exports. After that,
+                                //favor a non-undefined return value over exports use.
+                                cjsModule = this.module;
+                                if (cjsModule &&
+                                        cjsModule.exports !== undefined &&
+                                        //Make sure it is not already the exports value
+                                        cjsModule.exports !== this.exports) {
+                                    exports = cjsModule.exports;
+                                } else if (exports === undefined && this.usingExports) {
+                                    //exports already set the defined value.
+                                    exports = this.exports;
+                                }
+                            }
+
+                            if (err) {
+                                err.requireMap = this.map;
+                                err.requireModules = [this.map.id];
+                                err.requireType = 'define';
+                                return onError((this.error = err));
+                            }
+
+                        } else {
+                            //Just a literal value
+                            exports = factory;
+                        }
+
+                        this.exports = exports;
+
+                        if (this.map.isDefine && !this.ignore) {
+                            defined[id] = exports;
+
+                            if (req.onResourceLoad) {
+                                req.onResourceLoad(context, this.map, this.depMaps);
+                            }
+                        }
+
+                        //Clean up
+                        cleanRegistry(id);
+
+                        this.defined = true;
+                    }
+
+                    //Finished the define stage. Allow calling check again
+                    //to allow define notifications below in the case of a
+                    //cycle.
+                    this.defining = false;
+
+                    if (this.defined && !this.defineEmitted) {
+                        this.defineEmitted = true;
+                        this.emit('defined', this.exports);
+                        this.defineEmitComplete = true;
+                    }
+
+                }
+            },
+
+            callPlugin: function () {
+                var map = this.map,
+                    id = map.id,
+                    //Map already normalized the prefix.
+                    pluginMap = makeModuleMap(map.prefix);
+
+                //Mark this as a dependency for this plugin, so it
+                //can be traced for cycles.
+                this.depMaps.push(pluginMap);
+
+                on(pluginMap, 'defined', bind(this, function (plugin) {
+                    var load, normalizedMap, normalizedMod,
+                        name = this.map.name,
+                        parentName = this.map.parentMap ? this.map.parentMap.name : null,
+                        localRequire = context.makeRequire(map.parentMap, {
+                            enableBuildCallback: true
+                        });
+
+                    //If current map is not normalized, wait for that
+                    //normalized name to load instead of continuing.
+                    if (this.map.unnormalized) {
+                        //Normalize the ID if the plugin allows it.
+                        if (plugin.normalize) {
+                            name = plugin.normalize(name, function (name) {
+                                return normalize(name, parentName, true);
+                            }) || '';
+                        }
+
+                        //prefix and name should already be normalized, no need
+                        //for applying map config again either.
+                        normalizedMap = makeModuleMap(map.prefix + '!' + name,
+                                                      this.map.parentMap);
+                        on(normalizedMap,
+                            'defined', bind(this, function (value) {
+                                this.init([], function () { return value; }, null, {
+                                    enabled: true,
+                                    ignore: true
+                                });
+                            }));
+
+                        normalizedMod = getOwn(registry, normalizedMap.id);
+                        if (normalizedMod) {
+                            //Mark this as a dependency for this plugin, so it
+                            //can be traced for cycles.
+                            this.depMaps.push(normalizedMap);
+
+                            if (this.events.error) {
+                                normalizedMod.on('error', bind(this, function (err) {
+                                    this.emit('error', err);
+                                }));
+                            }
+                            normalizedMod.enable();
+                        }
+
+                        return;
+                    }
+
+                    load = bind(this, function (value) {
+                        this.init([], function () { return value; }, null, {
+                            enabled: true
+                        });
+                    });
+
+                    load.error = bind(this, function (err) {
+                        this.inited = true;
+                        this.error = err;
+                        err.requireModules = [id];
+
+                        //Remove temp unnormalized modules for this module,
+                        //since they will never be resolved otherwise now.
+                        eachProp(registry, function (mod) {
+                            if (mod.map.id.indexOf(id + '_unnormalized') === 0) {
+                                cleanRegistry(mod.map.id);
+                            }
+                        });
+
+                        onError(err);
+                    });
+
+                    //Allow plugins to load other code without having to know the
+                    //context or how to 'complete' the load.
+                    load.fromText = bind(this, function (text, textAlt) {
+                        /*jslint evil: true */
+                        var moduleName = map.name,
+                            moduleMap = makeModuleMap(moduleName),
+                            hasInteractive = useInteractive;
+
+                        //As of 2.1.0, support just passing the text, to reinforce
+                        //fromText only being called once per resource. Still
+                        //support old style of passing moduleName but discard
+                        //that moduleName in favor of the internal ref.
+                        if (textAlt) {
+                            text = textAlt;
+                        }
+
+                        //Turn off interactive script matching for IE for any define
+                        //calls in the text, then turn it back on at the end.
+                        if (hasInteractive) {
+                            useInteractive = false;
+                        }
+
+                        //Prime the system by creating a module instance for
+                        //it.
+                        getModule(moduleMap);
+
+                        //Transfer any config to this other module.
+                        if (hasProp(config.config, id)) {
+                            config.config[moduleName] = config.config[id];
+                        }
+
+                        try {
+                            req.exec(text);
+                        } catch (e) {
+                            return onError(makeError('fromtexteval',
+                                             'fromText eval for ' + id +
+                                            ' failed: ' + e,
+                                             e,
+                                             [id]));
+                        }
+
+                        if (hasInteractive) {
+                            useInteractive = true;
+                        }
+
+                        //Mark this as a dependency for the plugin
+                        //resource
+                        this.depMaps.push(moduleMap);
+
+                        //Support anonymous modules.
+                        context.completeLoad(moduleName);
+
+                        //Bind the value of that module to the value for this
+                        //resource ID.
+                        localRequire([moduleName], load);
+                    });
+
+                    //Use parentName here since the plugin's name is not reliable,
+                    //could be some weird string with no path that actually wants to
+                    //reference the parentName's path.
+                    plugin.load(map.name, localRequire, load, config);
+                }));
+
+                context.enable(pluginMap, this);
+                this.pluginMaps[pluginMap.id] = pluginMap;
+            },
+
+            enable: function () {
+                enabledRegistry[this.map.id] = this;
+                this.enabled = true;
+
+                //Set flag mentioning that the module is enabling,
+                //so that immediate calls to the defined callbacks
+                //for dependencies do not trigger inadvertent load
+                //with the depCount still being zero.
+                this.enabling = true;
+
+                //Enable each dependency
+                each(this.depMaps, bind(this, function (depMap, i) {
+                    var id, mod, handler;
+
+                    if (typeof depMap === 'string') {
+                        //Dependency needs to be converted to a depMap
+                        //and wired up to this module.
+                        depMap = makeModuleMap(depMap,
+                                               (this.map.isDefine ? this.map : this.map.parentMap),
+                                               false,
+                                               !this.skipMap);
+                        this.depMaps[i] = depMap;
+
+                        handler = getOwn(handlers, depMap.id);
+
+                        if (handler) {
+                            this.depExports[i] = handler(this);
+                            return;
+                        }
+
+                        this.depCount += 1;
+
+                        on(depMap, 'defined', bind(this, function (depExports) {
+                            this.defineDep(i, depExports);
+                            this.check();
+                        }));
+
+                        if (this.errback) {
+                            on(depMap, 'error', this.errback);
+                        }
+                    }
+
+                    id = depMap.id;
+                    mod = registry[id];
+
+                    //Skip special modules like 'require', 'exports', 'module'
+                    //Also, don't call enable if it is already enabled,
+                    //important in circular dependency cases.
+                    if (!hasProp(handlers, id) && mod && !mod.enabled) {
+                        context.enable(depMap, this);
+                    }
+                }));
+
+                //Enable each plugin that is used in
+                //a dependency
+                eachProp(this.pluginMaps, bind(this, function (pluginMap) {
+                    var mod = getOwn(registry, pluginMap.id);
+                    if (mod && !mod.enabled) {
+                        context.enable(pluginMap, this);
+                    }
+                }));
+
+                this.enabling = false;
+
+                this.check();
+            },
+
+            on: function (name, cb) {
+                var cbs = this.events[name];
+                if (!cbs) {
+                    cbs = this.events[name] = [];
+                }
+                cbs.push(cb);
+            },
+
+            emit: function (name, evt) {
+                each(this.events[name], function (cb) {
+                    cb(evt);
+                });
+                if (name === 'error') {
+                    //Now that the error handler was triggered, remove
+                    //the listeners, since this broken Module instance
+                    //can stay around for a while in the registry.
+                    delete this.events[name];
+                }
+            }
+        };
+
+        function callGetModule(args) {
+            //Skip modules already defined.
+            if (!hasProp(defined, args[0])) {
+                getModule(makeModuleMap(args[0], null, true)).init(args[1], args[2]);
+            }
+        }
+
+        function removeListener(node, func, name, ieName) {
+            //Favor detachEvent because of IE9
+            //issue, see attachEvent/addEventListener comment elsewhere
+            //in this file.
+            if (node.detachEvent && !isOpera) {
+                //Probably IE. If not it will throw an error, which will be
+                //useful to know.
+                if (ieName) {
+                    node.detachEvent(ieName, func);
+                }
+            } else {
+                node.removeEventListener(name, func, false);
+            }
+        }
+
+        /**
+         * Given an event from a script node, get the requirejs info from it,
+         * and then removes the event listeners on the node.
+         * @param {Event} evt
+         * @returns {Object}
+         */
+        function getScriptData(evt) {
+            //Using currentTarget instead of target for Firefox 2.0's sake. Not
+            //all old browsers will be supported, but this one was easy enough
+            //to support and still makes sense.
+            var node = evt.currentTarget || evt.srcElement;
+
+            //Remove the listeners once here.
+            removeListener(node, context.onScriptLoad, 'load', 'onreadystatechange');
+            removeListener(node, context.onScriptError, 'error');
+
+            return {
+                node: node,
+                id: node && node.getAttribute('data-requiremodule')
+            };
+        }
+
+        function intakeDefines() {
+            var args;
+
+            //Any defined modules in the global queue, intake them now.
+            takeGlobalQueue();
+
+            //Make sure any remaining defQueue items get properly processed.
+            while (defQueue.length) {
+                args = defQueue.shift();
+                if (args[0] === null) {
+                    return onError(makeError('mismatch', 'Mismatched anonymous define() module: ' + args[args.length - 1]));
+                } else {
+                    //args are id, deps, factory. Should be normalized by the
+                    //define() function.
+                    callGetModule(args);
+                }
+            }
+        }
+
+        context = {
+            config: config,
+            contextName: contextName,
+            registry: registry,
+            defined: defined,
+            urlFetched: urlFetched,
+            defQueue: defQueue,
+            Module: Module,
+            makeModuleMap: makeModuleMap,
+            nextTick: req.nextTick,
+            onError: onError,
+
+            /**
+             * Set a configuration for the context.
+             * @param {Object} cfg config object to integrate.
+             */
+            configure: function (cfg) {
+                //Make sure the baseUrl ends in a slash.
+                if (cfg.baseUrl) {
+                    if (cfg.baseUrl.charAt(cfg.baseUrl.length - 1) !== '/') {
+                        cfg.baseUrl += '/';
+                    }
+                }
+
+                //Save off the paths and packages since they require special processing,
+                //they are additive.
+                var pkgs = config.pkgs,
+                    shim = config.shim,
+                    objs = {
+                        paths: true,
+                        config: true,
+                        map: true
+                    };
+
+                eachProp(cfg, function (value, prop) {
+                    if (objs[prop]) {
+                        if (prop === 'map') {
+                            if (!config.map) {
+                                config.map = {};
+                            }
+                            mixin(config[prop], value, true, true);
+                        } else {
+                            mixin(config[prop], value, true);
+                        }
+                    } else {
+                        config[prop] = value;
+                    }
+                });
+
+                //Merge shim
+                if (cfg.shim) {
+                    eachProp(cfg.shim, function (value, id) {
+                        //Normalize the structure
+                        if (isArray(value)) {
+                            value = {
+                                deps: value
+                            };
+                        }
+                        if ((value.exports || value.init) && !value.exportsFn) {
+                            value.exportsFn = context.makeShimExports(value);
+                        }
+                        shim[id] = value;
+                    });
+                    config.shim = shim;
+                }
+
+                //Adjust packages if necessary.
+                if (cfg.packages) {
+                    each(cfg.packages, function (pkgObj) {
+                        var location;
+
+                        pkgObj = typeof pkgObj === 'string' ? { name: pkgObj } : pkgObj;
+                        location = pkgObj.location;
+
+                        //Create a brand new object on pkgs, since currentPackages can
+                        //be passed in again, and config.pkgs is the internal transformed
+                        //state for all package configs.
+                        pkgs[pkgObj.name] = {
+                            name: pkgObj.name,
+                            location: location || pkgObj.name,
+                            //Remove leading dot in main, so main paths are normalized,
+                            //and remove any trailing .js, since different package
+                            //envs have different conventions: some use a module name,
+                            //some use a file name.
+                            main: (pkgObj.main || 'main')
+                                  .replace(currDirRegExp, '')
+                                  .replace(jsSuffixRegExp, '')
+                        };
+                    });
+
+                    //Done with modifications, assing packages back to context config
+                    config.pkgs = pkgs;
+                }
+
+                //If there are any "waiting to execute" modules in the registry,
+                //update the maps for them, since their info, like URLs to load,
+                //may have changed.
+                eachProp(registry, function (mod, id) {
+                    //If module already has init called, since it is too
+                    //late to modify them, and ignore unnormalized ones
+                    //since they are transient.
+                    if (!mod.inited && !mod.map.unnormalized) {
+                        mod.map = makeModuleMap(id);
+                    }
+                });
+
+                //If a deps array or a config callback is specified, then call
+                //require with those args. This is useful when require is defined as a
+                //config object before require.js is loaded.
+                if (cfg.deps || cfg.callback) {
+                    context.require(cfg.deps || [], cfg.callback);
+                }
+            },
+
+            makeShimExports: function (value) {
+                function fn() {
+                    var ret;
+                    if (value.init) {
+                        ret = value.init.apply(global, arguments);
+                    }
+                    return ret || (value.exports && getGlobal(value.exports));
+                }
+                return fn;
+            },
+
+            makeRequire: function (relMap, options) {
+                options = options || {};
+
+                function localRequire(deps, callback, errback) {
+                    var id, map, requireMod;
+
+                    if (options.enableBuildCallback && callback && isFunction(callback)) {
+                        callback.__requireJsBuild = true;
+                    }
+
+                    if (typeof deps === 'string') {
+                        if (isFunction(callback)) {
+                            //Invalid call
+                            return onError(makeError('requireargs', 'Invalid require call'), errback);
+                        }
+
+                        //If require|exports|module are requested, get the
+                        //value for them from the special handlers. Caveat:
+                        //this only works while module is being defined.
+                        if (relMap && hasProp(handlers, deps)) {
+                            return handlers[deps](registry[relMap.id]);
+                        }
+
+                        //Synchronous access to one module. If require.get is
+                        //available (as in the Node adapter), prefer that.
+                        if (req.get) {
+                            return req.get(context, deps, relMap, localRequire);
+                        }
+
+                        //Normalize module name, if it contains . or ..
+                        map = makeModuleMap(deps, relMap, false, true);
+                        id = map.id;
+
+                        if (!hasProp(defined, id)) {
+                            return onError(makeError('notloaded', 'Module name "' +
+                                        id +
+                                        '" has not been loaded yet for context: ' +
+                                        contextName +
+                                        (relMap ? '' : '. Use require([])')));
+                        }
+                        return defined[id];
+                    }
+
+                    //Grab defines waiting in the global queue.
+                    intakeDefines();
+
+                    //Mark all the dependencies as needing to be loaded.
+                    context.nextTick(function () {
+                        //Some defines could have been added since the
+                        //require call, collect them.
+                        intakeDefines();
+
+                        requireMod = getModule(makeModuleMap(null, relMap));
+
+                        //Store if map config should be applied to this require
+                        //call for dependencies.
+                        requireMod.skipMap = options.skipMap;
+
+                        requireMod.init(deps, callback, errback, {
+                            enabled: true
+                        });
+
+                        checkLoaded();
+                    });
+
+                    return localRequire;
+                }
+
+                mixin(localRequire, {
+                    isBrowser: isBrowser,
+
+                    /**
+                     * Converts a module name + .extension into an URL path.
+                     * *Requires* the use of a module name. It does not support using
+                     * plain URLs like nameToUrl.
+                     */
+                    toUrl: function (moduleNamePlusExt) {
+                        var ext,
+                            index = moduleNamePlusExt.lastIndexOf('.'),
+                            segment = moduleNamePlusExt.split('/')[0],
+                            isRelative = segment === '.' || segment === '..';
+
+                        //Have a file extension alias, and it is not the
+                        //dots from a relative path.
+                        if (index !== -1 && (!isRelative || index > 1)) {
+                            ext = moduleNamePlusExt.substring(index, moduleNamePlusExt.length);
+                            moduleNamePlusExt = moduleNamePlusExt.substring(0, index);
+                        }
+
+                        return context.nameToUrl(normalize(moduleNamePlusExt,
+                                                relMap && relMap.id, true), ext,  true);
+                    },
+
+                    defined: function (id) {
+                        return hasProp(defined, makeModuleMap(id, relMap, false, true).id);
+                    },
+
+                    specified: function (id) {
+                        id = makeModuleMap(id, relMap, false, true).id;
+                        return hasProp(defined, id) || hasProp(registry, id);
+                    }
+                });
+
+                //Only allow undef on top level require calls
+                if (!relMap) {
+                    localRequire.undef = function (id) {
+                        //Bind any waiting define() calls to this context,
+                        //fix for #408
+                        takeGlobalQueue();
+
+                        var map = makeModuleMap(id, relMap, true),
+                            mod = getOwn(registry, id);
+
+                        delete defined[id];
+                        delete urlFetched[map.url];
+                        delete undefEvents[id];
+
+                        if (mod) {
+                            //Hold on to listeners in case the
+                            //module will be attempted to be reloaded
+                            //using a different config.
+                            if (mod.events.defined) {
+                                undefEvents[id] = mod.events;
+                            }
+
+                            cleanRegistry(id);
+                        }
+                    };
+                }
+
+                return localRequire;
+            },
+
+            /**
+             * Called to enable a module if it is still in the registry
+             * awaiting enablement. A second arg, parent, the parent module,
+             * is passed in for context, when this method is overriden by
+             * the optimizer. Not shown here to keep code compact.
+             */
+            enable: function (depMap) {
+                var mod = getOwn(registry, depMap.id);
+                if (mod) {
+                    getModule(depMap).enable();
+                }
+            },
+
+            /**
+             * Internal method used by environment adapters to complete a load event.
+             * A load event could be a script load or just a load pass from a synchronous
+             * load call.
+             * @param {String} moduleName the name of the module to potentially complete.
+             */
+            completeLoad: function (moduleName) {
+                var found, args, mod,
+                    shim = getOwn(config.shim, moduleName) || {},
+                    shExports = shim.exports;
+
+                takeGlobalQueue();
+
+                while (defQueue.length) {
+                    args = defQueue.shift();
+                    if (args[0] === null) {
+                        args[0] = moduleName;
+                        //If already found an anonymous module and bound it
+                        //to this name, then this is some other anon module
+                        //waiting for its completeLoad to fire.
+                        if (found) {
+                            break;
+                        }
+                        found = true;
+                    } else if (args[0] === moduleName) {
+                        //Found matching define call for this script!
+                        found = true;
+                    }
+
+                    callGetModule(args);
+                }
+
+                //Do this after the cycle of callGetModule in case the result
+                //of those calls/init calls changes the registry.
+                mod = getOwn(registry, moduleName);
+
+                if (!found && !hasProp(defined, moduleName) && mod && !mod.inited) {
+                    if (config.enforceDefine && (!shExports || !getGlobal(shExports))) {
+                        if (hasPathFallback(moduleName)) {
+                            return;
+                        } else {
+                            return onError(makeError('nodefine',
+                                             'No define call for ' + moduleName,
+                                             null,
+                                             [moduleName]));
+                        }
+                    } else {
+                        //A script that does not call define(), so just simulate
+                        //the call for it.
+                        callGetModule([moduleName, (shim.deps || []), shim.exportsFn]);
+                    }
+                }
+
+                checkLoaded();
+            },
+
+            /**
+             * Converts a module name to a file path. Supports cases where
+             * moduleName may actually be just an URL.
+             * Note that it **does not** call normalize on the moduleName,
+             * it is assumed to have already been normalized. This is an
+             * internal API, not a public one. Use toUrl for the public API.
+             */
+            nameToUrl: function (moduleName, ext, skipExt) {
+                var paths, pkgs, pkg, pkgPath, syms, i, parentModule, url,
+                    parentPath;
+
+                //If a colon is in the URL, it indicates a protocol is used and it is just
+                //an URL to a file, or if it starts with a slash, contains a query arg (i.e. ?)
+                //or ends with .js, then assume the user meant to use an url and not a module id.
+                //The slash is important for protocol-less URLs as well as full paths.
+                if (req.jsExtRegExp.test(moduleName)) {
+                    //Just a plain path, not module name lookup, so just return it.
+                    //Add extension if it is included. This is a bit wonky, only non-.js things pass
+                    //an extension, this method probably needs to be reworked.
+                    url = moduleName + (ext || '');
+                } else {
+                    //A module that needs to be converted to a path.
+                    paths = config.paths;
+                    pkgs = config.pkgs;
+
+                    syms = moduleName.split('/');
+                    //For each module name segment, see if there is a path
+                    //registered for it. Start with most specific name
+                    //and work up from it.
+                    for (i = syms.length; i > 0; i -= 1) {
+                        parentModule = syms.slice(0, i).join('/');
+                        pkg = getOwn(pkgs, parentModule);
+                        parentPath = getOwn(paths, parentModule);
+                        if (parentPath) {
+                            //If an array, it means there are a few choices,
+                            //Choose the one that is desired
+                            if (isArray(parentPath)) {
+                                parentPath = parentPath[0];
+                            }
+                            syms.splice(0, i, parentPath);
+                            break;
+                        } else if (pkg) {
+                            //If module name is just the package name, then looking
+                            //for the main module.
+                            if (moduleName === pkg.name) {
+                                pkgPath = pkg.location + '/' + pkg.main;
+                            } else {
+                                pkgPath = pkg.location;
+                            }
+                            syms.splice(0, i, pkgPath);
+                            break;
+                        }
+                    }
+
+                    //Join the path parts together, then figure out if baseUrl is needed.
+                    url = syms.join('/');
+                    url += (ext || (/\?/.test(url) || skipExt ? '' : '.js'));
+                    url = (url.charAt(0) === '/' || url.match(/^[\w\+\.\-]+:/) ? '' : config.baseUrl) + url;
+                }
+
+                return config.urlArgs ? url +
+                                        ((url.indexOf('?') === -1 ? '?' : '&') +
+                                         config.urlArgs) : url;
+            },
+
+            //Delegates to req.load. Broken out as a separate function to
+            //allow overriding in the optimizer.
+            load: function (id, url) {
+                req.load(context, id, url);
+            },
+
+            /**
+             * Executes a module callack function. Broken out as a separate function
+             * solely to allow the build system to sequence the files in the built
+             * layer in the right sequence.
+             *
+             * @private
+             */
+            execCb: function (name, callback, args, exports) {
+                return callback.apply(exports, args);
+            },
+
+            /**
+             * callback for script loads, used to check status of loading.
+             *
+             * @param {Event} evt the event from the browser for the script
+             * that was loaded.
+             */
+            onScriptLoad: function (evt) {
+                //Using currentTarget instead of target for Firefox 2.0's sake. Not
+                //all old browsers will be supported, but this one was easy enough
+                //to support and still makes sense.
+                if (evt.type === 'load' ||
+                        (readyRegExp.test((evt.currentTarget || evt.srcElement).readyState))) {
+                    //Reset interactive script so a script node is not held onto for
+                    //to long.
+                    interactiveScript = null;
+
+                    //Pull out the name of the module and the context.
+                    var data = getScriptData(evt);
+                    context.completeLoad(data.id);
+                }
+            },
+
+            /**
+             * Callback for script errors.
+             */
+            onScriptError: function (evt) {
+                var data = getScriptData(evt);
+                if (!hasPathFallback(data.id)) {
+                    return onError(makeError('scripterror', 'Script error', evt, [data.id]));
+                }
+            }
+        };
+
+        context.require = context.makeRequire();
+        return context;
+    }
+
+    /**
+     * Main entry point.
+     *
+     * If the only argument to require is a string, then the module that
+     * is represented by that string is fetched for the appropriate context.
+     *
+     * If the first argument is an array, then it will be treated as an array
+     * of dependency string names to fetch. An optional function callback can
+     * be specified to execute when all of those dependencies are available.
+     *
+     * Make a local req variable to help Caja compliance (it assumes things
+     * on a require that are not standardized), and to give a short
+     * name for minification/local scope use.
+     */
+    req = requirejs = function (deps, callback, errback, optional) {
+
+        //Find the right context, use default
+        var context, config,
+            contextName = defContextName;
+
+        // Determine if have config object in the call.
+        if (!isArray(deps) && typeof deps !== 'string') {
+            // deps is a config object
+            config = deps;
+            if (isArray(callback)) {
+                // Adjust args if there are dependencies
+                deps = callback;
+                callback = errback;
+                errback = optional;
+            } else {
+                deps = [];
+            }
+        }
+
+        if (config && config.context) {
+            contextName = config.context;
+        }
+
+        context = getOwn(contexts, contextName);
+        if (!context) {
+            context = contexts[contextName] = req.s.newContext(contextName);
+        }
+
+        if (config) {
+            context.configure(config);
+        }
+
+        return context.require(deps, callback, errback);
+    };
+
+    /**
+     * Support require.config() to make it easier to cooperate with other
+     * AMD loaders on globally agreed names.
+     */
+    req.config = function (config) {
+        return req(config);
+    };
+
+    /**
+     * Execute something after the current tick
+     * of the event loop. Override for other envs
+     * that have a better solution than setTimeout.
+     * @param  {Function} fn function to execute later.
+     */
+    req.nextTick = typeof setTimeout !== 'undefined' ? function (fn) {
+        setTimeout(fn, 4);
+    } : function (fn) { fn(); };
+
+    /**
+     * Export require as a global, but only if it does not already exist.
+     */
+    if (!require) {
+        require = req;
+    }
+
+    req.version = version;
+
+    //Used to filter out dependencies that are already paths.
+    req.jsExtRegExp = /^\/|:|\?|\.js$/;
+    req.isBrowser = isBrowser;
+    s = req.s = {
+        contexts: contexts,
+        newContext: newContext
+    };
+
+    //Create default context.
+    req({});
+
+    //Exports some context-sensitive methods on global require.
+    each([
+        'toUrl',
+        'undef',
+        'defined',
+        'specified'
+    ], function (prop) {
+        //Reference from contexts instead of early binding to default context,
+        //so that during builds, the latest instance of the default context
+        //with its config gets used.
+        req[prop] = function () {
+            var ctx = contexts[defContextName];
+            return ctx.require[prop].apply(ctx, arguments);
+        };
+    });
+
+    if (isBrowser) {
+        head = s.head = document.getElementsByTagName('head')[0];
+        //If BASE tag is in play, using appendChild is a problem for IE6.
+        //When that browser dies, this can be removed. Details in this jQuery bug:
+        //http://dev.jquery.com/ticket/2709
+        baseElement = document.getElementsByTagName('base')[0];
+        if (baseElement) {
+            head = s.head = baseElement.parentNode;
+        }
+    }
+
+    /**
+     * Any errors that require explicitly generates will be passed to this
+     * function. Intercept/override it if you want custom error handling.
+     * @param {Error} err the error object.
+     */
+    req.onError = function (err) {
+        throw err;
+    };
+
+    /**
+     * Does the request to load a module for the browser case.
+     * Make this a separate function to allow other environments
+     * to override it.
+     *
+     * @param {Object} context the require context to find state.
+     * @param {String} moduleName the name of the module.
+     * @param {Object} url the URL to the module.
+     */
+    req.load = function (context, moduleName, url) {
+        var config = (context && context.config) || {},
+            node;
+        if (isBrowser) {
+            //In the browser so use a script tag
+            node = config.xhtml ?
+                    document.createElementNS('http://www.w3.org/1999/xhtml', 'html:script') :
+                    document.createElement('script');
+            node.type = config.scriptType || 'text/javascript';
+            node.charset = 'utf-8';
+            node.async = true;
+
+            node.setAttribute('data-requirecontext', context.contextName);
+            node.setAttribute('data-requiremodule', moduleName);
+
+            //Set up load listener. Test attachEvent first because IE9 has
+            //a subtle issue in its addEventListener and script onload firings
+            //that do not match the behavior of all other browsers with
+            //addEventListener support, which fire the onload event for a
+            //script right after the script execution. See:
+            //https://connect.microsoft.com/IE/feedback/details/648057/script-onload-event-is-not-fired-immediately-after-script-execution
+            //UNFORTUNATELY Opera implements attachEvent but does not follow the script
+            //script execution mode.
+            if (node.attachEvent &&
+                    //Check if node.attachEvent is artificially added by custom script or
+                    //natively supported by browser
+                    //read https://github.com/jrburke/requirejs/issues/187
+                    //if we can NOT find [native code] then it must NOT natively supported.
+                    //in IE8, node.attachEvent does not have toString()
+                    //Note the test for "[native code" with no closing brace, see:
+                    //https://github.com/jrburke/requirejs/issues/273
+                    !(node.attachEvent.toString && node.attachEvent.toString().indexOf('[native code') < 0) &&
+                    !isOpera) {
+                //Probably IE. IE (at least 6-8) do not fire
+                //script onload right after executing the script, so
+                //we cannot tie the anonymous define call to a name.
+                //However, IE reports the script as being in 'interactive'
+                //readyState at the time of the define call.
+                useInteractive = true;
+
+                node.attachEvent('onreadystatechange', context.onScriptLoad);
+                //It would be great to add an error handler here to catch
+                //404s in IE9+. However, onreadystatechange will fire before
+                //the error handler, so that does not help. If addEventListener
+                //is used, then IE will fire error before load, but we cannot
+                //use that pathway given the connect.microsoft.com issue
+                //mentioned above about not doing the 'script execute,
+                //then fire the script load event listener before execute
+                //next script' that other browsers do.
+                //Best hope: IE10 fixes the issues,
+                //and then destroys all installs of IE 6-9.
+                //node.attachEvent('onerror', context.onScriptError);
+            } else {
+                node.addEventListener('load', context.onScriptLoad, false);
+                node.addEventListener('error', context.onScriptError, false);
+            }
+            node.src = url;
+
+            //For some cache cases in IE 6-8, the script executes before the end
+            //of the appendChild execution, so to tie an anonymous define
+            //call to the module name (which is stored on the node), hold on
+            //to a reference to this node, but clear after the DOM insertion.
+            currentlyAddingScript = node;
+            if (baseElement) {
+                head.insertBefore(node, baseElement);
+            } else {
+                head.appendChild(node);
+            }
+            currentlyAddingScript = null;
+
+            return node;
+        } else if (isWebWorker) {
+            try {
+                //In a web worker, use importScripts. This is not a very
+                //efficient use of importScripts, importScripts will block until
+                //its script is downloaded and evaluated. However, if web workers
+                //are in play, the expectation that a build has been done so that
+                //only one script needs to be loaded anyway. This may need to be
+                //reevaluated if other use cases become common.
+                importScripts(url);
+
+                //Account for anonymous modules
+                context.completeLoad(moduleName);
+            } catch (e) {
+                context.onError(makeError('importscripts',
+                                'importScripts failed for ' +
+                                    moduleName + ' at ' + url,
+                                e,
+                                [moduleName]));
+            }
+        }
+    };
+
+    function getInteractiveScript() {
+        if (interactiveScript && interactiveScript.readyState === 'interactive') {
+            return interactiveScript;
+        }
+
+        eachReverse(scripts(), function (script) {
+            if (script.readyState === 'interactive') {
+                return (interactiveScript = script);
+            }
+        });
+        return interactiveScript;
+    }
+
+    //Look for a data-main script attribute, which could also adjust the baseUrl.
+    if (isBrowser) {
+        //Figure out baseUrl. Get it from the script tag with require.js in it.
+        eachReverse(scripts(), function (script) {
+            //Set the 'head' where we can append children by
+            //using the script's parent.
+            if (!head) {
+                head = script.parentNode;
+            }
+
+            //Look for a data-main attribute to set main script for the page
+            //to load. If it is there, the path to data main becomes the
+            //baseUrl, if it is not already set.
+            dataMain = script.getAttribute('data-main');
+            if (dataMain) {
+                //Set final baseUrl if there is not already an explicit one.
+                if (!cfg.baseUrl) {
+                    //Pull off the directory of data-main for use as the
+                    //baseUrl.
+                    src = dataMain.split('/');
+                    mainScript = src.pop();
+                    subPath = src.length ? src.join('/')  + '/' : './';
+
+                    cfg.baseUrl = subPath;
+                    dataMain = mainScript;
+                }
+
+                //Strip off any trailing .js since dataMain is now
+                //like a module name.
+                dataMain = dataMain.replace(jsSuffixRegExp, '');
+
+                //Put the data-main script in the files to load.
+                cfg.deps = cfg.deps ? cfg.deps.concat(dataMain) : [dataMain];
+
+                return true;
+            }
+        });
+    }
+
+    /**
+     * The function that handles definitions of modules. Differs from
+     * require() in that a string for the module should be the first argument,
+     * and the function to execute after dependencies are loaded should
+     * return a value to define the module corresponding to the first argument's
+     * name.
+     */
+    define = function (name, deps, callback) {
+        var node, context;
+
+        //Allow for anonymous modules
+        if (typeof name !== 'string') {
+            //Adjust args appropriately
+            callback = deps;
+            deps = name;
+            name = null;
+        }
+
+        //This module may not have dependencies
+        if (!isArray(deps)) {
+            callback = deps;
+            deps = [];
+        }
+
+        //If no name, and callback is a function, then figure out if it a
+        //CommonJS thing with dependencies.
+        if (!deps.length && isFunction(callback)) {
+            //Remove comments from the callback string,
+            //look for require calls, and pull them into the dependencies,
+            //but only if there are function args.
+            if (callback.length) {
+                callback
+                    .toString()
+                    .replace(commentRegExp, '')
+                    .replace(cjsRequireRegExp, function (match, dep) {
+                        deps.push(dep);
+                    });
+
+                //May be a CommonJS thing even without require calls, but still
+                //could use exports, and module. Avoid doing exports and module
+                //work though if it just needs require.
+                //REQUIRES the function to expect the CommonJS variables in the
+                //order listed below.
+                deps = (callback.length === 1 ? ['require'] : ['require', 'exports', 'module']).concat(deps);
+            }
+        }
+
+        //If in IE 6-8 and hit an anonymous define() call, do the interactive
+        //work.
+        if (useInteractive) {
+            node = currentlyAddingScript || getInteractiveScript();
+            if (node) {
+                if (!name) {
+                    name = node.getAttribute('data-requiremodule');
+                }
+                context = contexts[node.getAttribute('data-requirecontext')];
+            }
+        }
+
+        //Always save off evaluating the def call until the script onload handler.
+        //This allows multiple modules to be in a file without prematurely
+        //tracing dependencies, and allows for anonymous module support,
+        //where the module name is not known until the script onload event
+        //occurs. If no context, use the global queue, and get it processed
+        //in the onscript load callback.
+        (context ? context.defQueue : globalDefQueue).push([name, deps, callback]);
+    };
+
+    define.amd = {
+        jQuery: true
+    };
+
+
+    /**
+     * Executes the text. Normally just uses eval, but can be modified
+     * to use a better, environment-specific call. Only used for transpiling
+     * loader plugins, not for plain JS modules.
+     * @param {String} text the text to execute/evaluate.
+     */
+    req.exec = function (text) {
+        /*jslint evil: true */
+        return eval(text);
+    };
+
+    //Set up with config info.
+    req(cfg);
+}(this));
