@@ -15,8 +15,6 @@
 		for (var i = 0; i < this.A.length; i++) {
 			this.answer.push(0);
 		}
-
-
 		this.mayoresDeFilas();
 		for (var k = 0; k < this.A.length-1; k++) {
 			this.printEtapa(k+1);
@@ -42,6 +40,5 @@
 		this.sustitucionRegresiva("A");
 
 	}
-
 	global.prototype.eliminacionGaussianaEscalado = eliminacionGaussianaEscalado;
 })(Sistema);

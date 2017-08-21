@@ -2,8 +2,9 @@
  * Design by Al-Khwarizmi
  */
 
-require(["jquery", "Sistema", "MathJax"], function($) {
-	MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+num.require(["jquery", "Sistema"], function($) {
+	// MathJax config was disable because is already inside Moodle 3.1 or can be embed before this code in Moodle <2.9
+	// MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 
 	function read_matrix(num){
 		if(!$("#matrix-"+num).length){
@@ -183,7 +184,6 @@ require(["jquery", "Sistema", "MathJax"], function($) {
 		}
 		data.push(b);
 		localStorage.setItem("matriz", JSON.stringify(data));
-		console.log(data);
 	});
 
 	$(document).on('click', '#load', function() {
@@ -198,7 +198,6 @@ require(["jquery", "Sistema", "MathJax"], function($) {
 		var data = JSON.parse(localStorage.getItem("matriz"));
 		$("#matr-num").val(data[0].length);
 		rerender(data);
-		console.log(data);
 	});
 
 
@@ -218,7 +217,7 @@ require(["jquery", "Sistema", "MathJax"], function($) {
 		showDescription();
 	});
 
-	require(["funciones", "print"], function() {
+	num.require(["funciones", "print"], function() {
 		showDescription();
 		$(document).on('click', '#showSolution', function() {
 			$("#solution").show();
@@ -232,7 +231,7 @@ require(["jquery", "Sistema", "MathJax"], function($) {
 
 			var data = Sistema(read_matrix(0), read_matrix(1));
 			$("#solution").append("<h2>"+metodo.name+"</h2>")
-			require(["lineales/"+metodo.file], function() {
+			num.require(["lineales/"+metodo.file], function() {
 				try{
 				 	data[metodo.id]();
 		        }catch(e){
@@ -255,6 +254,4 @@ require(["jquery", "Sistema", "MathJax"], function($) {
 	$( "#num-lineales" ).append(render_input());
 	renderSelectMetodos(getDefault());
 	rerender();
-
-
 });

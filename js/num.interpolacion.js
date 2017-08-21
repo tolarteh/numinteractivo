@@ -2,8 +2,9 @@
  * Design by Al-Khwarizmi
  */
 
-require(["jquery", "Sistema", "MathJax", "print"], function($) {
-	MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+num.require(["jquery", "Sistema", "print"], function($) {
+	// MathJax config was disable because is already inside Moodle 3.1 or can be embed before this code in Moodle <2.9
+	// MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 
 	function read_matrix(num){
 		if(!$("#matrix-"+num).length){
@@ -284,7 +285,6 @@ require(["jquery", "Sistema", "MathJax", "print"], function($) {
 		data.push(bTmp);
 
 		localStorage.setItem("matriz4", JSON.stringify(data));
-		console.log(data);
 	});
 
 	$(document).on('click', '#load', function() {
@@ -299,7 +299,6 @@ require(["jquery", "Sistema", "MathJax", "print"], function($) {
 		var data = JSON.parse(localStorage.getItem("matriz4"));
 		$("#matr-num").val(data[0].length);
 		rerender(data);
-		console.log(data);
 	});
 
 
@@ -352,7 +351,7 @@ require(["jquery", "Sistema", "MathJax", "print"], function($) {
 		$("#solution").append("<h2>"+metodo.name+"</h2>");
 
 		var interpolacionPrint;
-		require(["funciones", "print", "printSpline", "lineales/eliminacionGaussianaPivoteo", "interpolacion/"+metodo.file], function() {
+		num.require(["funciones", "print", "printSpline", "lineales/eliminacionGaussianaPivoteo", "interpolacion/"+metodo.file], function() {
 			for(var prop in Sistema.prototype){ //Limpiamos funciones de print para evitar la salida de lineales/eliminacionGaussianaPivoteo
 				if(prop.startsWith("print")){
 					Sistema.prototype[prop] = function(){};

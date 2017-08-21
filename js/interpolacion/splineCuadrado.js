@@ -138,7 +138,6 @@
 		b.push(0);
 
 		console.log(answers);
-		console.log(b);
 
 		//splineRenderTable(answers, b);
 		var data = Sistema(answers.slice(), b.slice());

@@ -41,13 +41,9 @@
 			this.cont_j++;
 		}
 
-		console.log(this.matrizL);
-		console.log(this.matrizU);
 		this.sustitucionProgresiva();//sustitución progreasiva
-		console.warn(this.matrizU);
 		this.printSolucionB();
 		this.sustitucionRegresiva("U");//sustitución regresiva en U
-		console.warn(this.matrizU);
 		console.log(this.answer);
 	}
 
