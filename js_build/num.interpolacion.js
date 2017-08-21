@@ -285,7 +285,6 @@ num.require(["jquery", "Sistema", "print"], function($) {
 		data.push(bTmp);
 
 		localStorage.setItem("matriz4", JSON.stringify(data));
-		console.log(data);
 	});
 
 	$(document).on('click', '#load', function() {
@@ -300,7 +299,6 @@ num.require(["jquery", "Sistema", "print"], function($) {
 		var data = JSON.parse(localStorage.getItem("matriz4"));
 		$("#matr-num").val(data[0].length);
 		rerender(data);
-		console.log(data);
 	});
 
 

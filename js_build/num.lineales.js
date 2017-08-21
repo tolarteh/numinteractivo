@@ -184,7 +184,6 @@ num.require(["jquery", "Sistema"], function($) {
 		}
 		data.push(b);
 		localStorage.setItem("matriz", JSON.stringify(data));
-		console.log(data);
 	});
 
 	$(document).on('click', '#load', function() {
@@ -199,7 +198,6 @@ num.require(["jquery", "Sistema"], function($) {
 		var data = JSON.parse(localStorage.getItem("matriz"));
 		$("#matr-num").val(data[0].length);
 		rerender(data);
-		console.log(data);
 	});
 
 
@@ -256,6 +254,4 @@ num.require(["jquery", "Sistema"], function($) {
 	$( "#num-lineales" ).append(render_input());
 	renderSelectMetodos(getDefault());
 	rerender();
-
-
 });
