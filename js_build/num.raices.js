@@ -279,7 +279,7 @@ num.require(["math", "jquery", "jquery.tmpl", "MathJax"], function(math, $) {
         	metodo = metodos[0];
         }
 
-		require(["raices/"+metodo.file], function() {
+		num.require(["raices/"+metodo.file], function() {
 			renderOptions(window[metodo.file].getEntrada());
 			$("#alk-title").text(metodo.name);
 

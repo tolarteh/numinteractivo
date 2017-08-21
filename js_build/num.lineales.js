@@ -232,7 +232,7 @@ num.require(["jquery", "Sistema", "MathJax"], function($) {
 
 			var data = Sistema(read_matrix(0), read_matrix(1));
 			$("#solution").append("<h2>"+metodo.name+"</h2>")
-			require(["lineales/"+metodo.file], function() {
+			num.require(["lineales/"+metodo.file], function() {
 				try{
 				 	data[metodo.id]();
 		        }catch(e){

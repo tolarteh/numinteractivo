@@ -290,7 +290,7 @@ num.require(["jquery", "MathJax"], function($) {
 
 
 		$("#solution").append("<h2>"+metodo.name+"</h2>");
-		require(["lineales/"+metodo.file], function() {
+		num.require(["lineales/"+metodo.file], function() {
 			try{
 			 	var solucion = window[metodo.id](matrizA, vectorB, x0, relajacion, lambda, ite, tol);
 			 	console.log(solucion);
