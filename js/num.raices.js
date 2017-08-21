@@ -7,7 +7,7 @@ requirejs.config({
 	}
 });
 
-require(["math", "jquery", "jquery.tmpl", "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"], function(math, $) {
+require(["math", "jquery", "jquery.tmpl", "MathJax"], function(math, $) {
 	// functionPlot
 	require(["d3"], function() {
 		window.d3 = d3;
