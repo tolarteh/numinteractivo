@@ -43,7 +43,7 @@ var puntofijo = (function() {
     var metodo = function(f, g, xi, ni, tol, errorRel) {
         var math = this.math; // Obtener libreria Math
         var result = [];
-        var messsage = [];
+        var msg = [];
 
 
         var xn = xi;
@@ -70,7 +70,7 @@ var puntofijo = (function() {
             msg.push("Fracaso en " + ni + " iteraciones, hasta el momento $x_n=" + xn + "$");
         }
 
-        return {data: result, message: messsage}; // Se retorna los datos en cada iteración y los mensajes.
+        return {data: result, message: msg}; // Se retorna los datos en cada iteración y los mensajes.
 
     };
 
