@@ -1,3 +1,5 @@
+var num;(function () { if (!num || !num.requirejs) {
+if (!num) { num = {}; } else { require = num; }
 /** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.3.4 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, https://github.com/requirejs/requirejs/blob/master/LICENSE
@@ -1798,7 +1800,7 @@ var requirejs, require, define;
     };
 
     /**
-     * Support require.config() to make it easier to cooperate with other
+     * Support num.require.config() to make it easier to cooperate with other
      * AMD loaders on globally agreed names.
      */
     req.config = function (config) {
@@ -2143,3 +2145,7 @@ var requirejs, require, define;
     //Set up with config info.
     req(cfg);
 }(this, (typeof setTimeout === 'undefined' ? undefined : setTimeout)));
+
+num.requirejs = requirejs;num.require = require;num.define = define;
+}
+}());

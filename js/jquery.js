@@ -43,7 +43,7 @@
 // throw exceptions when non-strict code (e.g., ASP.NET 4.5) accesses strict mode
 // arguments.callee.caller (trac-13335). But as of jQuery 3.0 (2016), strict mode should be common
 // enough that all such attempts are guarded in a try block.
-"use strict";
+
 
 var arr = [];
 
@@ -10210,8 +10210,8 @@ jQuery.nodeName = nodeName;
 // AMD loader is present. jQuery is a special case. For more information, see
 // https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
 
-if ( typeof define === "function" && define.amd ) {
-	define( "jquery", [], function() {
+if ( typeof num.define === 'function' && num.define.amd ) {
+	num.define( "jquery", [], function() {
 		return jQuery;
 	} );
 }

@@ -16,8 +16,6 @@
                     }
                 }
                 resultado = resultado + (producto * vectorY[i]);
-                
-                console.log("L", i, "(x): ",termino);
 
                 if(i > 0){
                     polinomio += "\\nonumber \\\\ & &";

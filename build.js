@@ -1,6 +1,6 @@
 ({
     baseUrl: "./js",
-    dir: "./js_build",
+    dir: "./js_min",
     //Indicates the namespace to use for require/requirejs/define.
-    namespace: "num",
+    //namespace: "num",
 })

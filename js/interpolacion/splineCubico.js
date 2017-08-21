@@ -189,7 +189,6 @@
 		}
 
 		console.log(answers);
-		console.log(b);
 
 		var data = Sistema(answers.slice(), b.slice());
 		data.eliminacionGaussianaPivoteo();

@@ -1,0 +1,1 @@
+!function(r){var a=function(r,a,n,e){var o=[],f="",i=new Array;for(v=0;v<r;v++)for(i[v]=new Array,s=0;s<r;s++)i[v][s]="";for(var v=0;v<r;v++){i[v][0]=n[v];for(var s=1;s<=v;s++)i[v][s]=((e-a[v-s])*i[v][s-1]-(e-a[v])*i[v-1][s-1])/(a[v]-a[v-s]);o.push([i[v].slice()])}return""!=e&&(f="$$ p("+e+") = "+i[r-1][r-1]+" $$"),{data:o,message:f}};r.neville=a}(window);

@@ -39,10 +39,6 @@
 			this.cont_i++;
 			this.cont_j++;
 		}
-		console.log("answers");
-		console.log(this.matrizL);
-		console.log(this.matrizU);
-
 		this.sustitucionProgresiva();
 		this.sustitucionRegresiva("U");
 

@@ -1,17 +1,17 @@
 /**
  * Design by Al-Khwarizmi
  */
-requirejs.config({
+num.requirejs.config({
 	shim: {
 		"jquery.tmpl": ["jquery"]
 	}
 });
 
-require(["math", "jquery", "jquery.tmpl", "MathJax"], function(math, $) {
+num.require(["math", "jquery", "jquery.tmpl"], function(math, $) {
 	// functionPlot
-	require(["d3"], function() {
+	num.require(["d3"], function() {
 		window.d3 = d3;
-		require(["function-plot"], function(functionPlot) {
+		num.require(["function-plot"], function(functionPlot) {
 			window.functionPlot = functionPlot;
 		});
 	});
@@ -279,7 +279,7 @@ require(["math", "jquery", "jquery.tmpl", "MathJax"], function(math, $) {
         	metodo = metodos[0];
         }
 
-		require(["raices/"+metodo.file], function() {
+		num.require(["raices/"+metodo.file], function() {
 			renderOptions(window[metodo.file].getEntrada());
 			$("#alk-title").text(metodo.name);
 
@@ -346,7 +346,8 @@ require(["math", "jquery", "jquery.tmpl", "MathJax"], function(math, $) {
     	if (!$("#num-raices" ).length) {
 			throw "No se encuentra el elemento con id: 'metodo'. Incluya un div con ese ID en el cuerpo de su sitio.";
 		}
-		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+		// MathJax config was disable because is already inside Moodle 3.1 or can be embed before this code in Moodle <2.9
+		// MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 
 		cargarMetodo(getDefault());
     });

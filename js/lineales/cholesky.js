@@ -34,9 +34,6 @@
 			this.cont_i++;
 			this.cont_j++;
 		}
-		console.log(this.matrizL);
-		console.log(this.matrizU);
-
 		this.sustitucionProgresiva();//sustitución progreasiva
 		this.sustitucionRegresiva("U");//sustitución regresiva en U
 	}

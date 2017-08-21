@@ -46,7 +46,6 @@
             }
 
             error = Math.pow(acumNumerador,0.5)/notZero(Math.pow(errDenominador,0.5));
-            //console.log("ite " + contador + " xi  " + x + " error "+ error);
             result.push([x.slice(), error]);
             contador++;
 
