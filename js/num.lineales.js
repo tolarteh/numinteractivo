@@ -2,7 +2,7 @@
  * Design by Al-Khwarizmi
  */
 
-require(["jquery", "Sistema", "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"], function($) {
+require(["jquery", "Sistema", "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"], function($) {
 	MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 
 	function read_matrix(num){
