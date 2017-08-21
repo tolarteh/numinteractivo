@@ -2,8 +2,9 @@
  * Design by Al-Khwarizmi
  */
 
-num.require(["jquery", "Sistema", "MathJax", "print"], function($) {
-	MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+num.require(["jquery", "Sistema", "print"], function($) {
+	// MathJax config was disable because is already inside Moodle 3.1 or can be embed before this code in Moodle <2.9
+	// MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 
 	function read_matrix(num){
 		if(!$("#matrix-"+num).length){
